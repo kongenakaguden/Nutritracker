@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>NutriTracker, Eksamen, Viggo</title>
+    <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <div class="navbar">
+        <div class="navbar-logo-container">
+            <img src="images/logo.png" alt="NutriTracker Logo" class="navbar-logo" />
+        </div>
+        <div class="navbar-links">
+            <a href="index.html" class="active">Dashboard</a>
+            <a href="meal_creator.html">Meal Creator</a>
+            <a href="meal_tracker.html">Meal Tracker</a>
+            <a href="nutri_report.html">Nutri Report</a>
+            <a href="food_inspector.html">Food Inspector</a>
+        </div>
+    </div>
+    <div id="dashboard_title">
+        <h1>Dashboard</h1>
+    </div>
+    <div class="dashboard">
+        <div class="container">
+            <div class="category-label">Meals Today</div>
+            <h2 id="mealsToday" class="dashboard-data">0</h2>
+            <p>Meals consumed today</p>
+        </div>
+        <div class="container">
+            <div class="category-label">Energy Today</div>
+            <h2 id="energyToday" class="dashboard-data">0 kcal</h2>
+            <p>Kalories consumed today</p>
+        </div>
+        <div class="container">
+            <div class="category-label">Water Today</div>
+            <h2 id="waterToday" class="dashboard-data">0 L</h2>
+            <p>Water consumed today</p>
+        </div>
+        <div class="container">
+            <div class="category-label">Protein Today</div>
+            <h2 id="proteinToday" class="dashboard-data">0 g</h2>
+            <p>Protein consumed today</p>
+        </div>
+    </div>
+    
+    <script src="dashboard.js"></script>
+</body>
+</html>

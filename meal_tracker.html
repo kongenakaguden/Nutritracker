@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Meal Tracker</title>
+    <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <div class="navbar">
+        <div class="navbar-logo-container">
+            <img src="images/logo.png" alt="NutriTracker Logo" class="navbar-logo" />
+        </div>
+        <div class="navbar-links">
+            <a href="index.html">Dashboard</a>
+            <a href="meal_creator.html">Meal Creator</a>
+            <a href="meal_tracker.html" class="active">Meal Tracker</a>
+            <a href="nutri_report.html">Nutri Report</a>
+            <a href="food_inspector.html">Food Inspector</a>
+        </div>
+    </div>
+
+    <div class="tracker-container">
+        <h2>Meal Tracker</h2>
+        <form id="trackMealForm">
+            <label for="recipeSelect">Select Recipe:</label>
+            <select id="recipeSelect" name="recipe" required>
+            </select>
+
+            <label for="mealWeight">Weight of Meal (grams):</label>
+            <input type="number" id="mealWeight" name="mealWeight" required>
+
+            <label for="mealTime">Time of Meal:</label>
+            <input type="time" id="mealTime" name="mealTime" required>
+
+            <label for="drinkVolume">Volume of Drink (liters):</label>
+            <input type="number" id="drinkVolume" name="drinkVolume" step="0.1" required>
+
+            <label for="drinkTime">Time of Drink:</label>
+            <input type="time" id="drinkTime" name="drinkTime" required>
+
+            <button type="submit">Register Intake</button>
+        </form>
+
+        <div class="intake-records">
+            <h3>Your Intake Records</h3>
+           
+            <div class="record">
+                <span>Chicken Salad - 250g at 12:30, 500 kcal</span>
+                <button class="edit">Edit</button>
+                <button class="delete">Delete</button>
+            </div>
+        </div>
+    </div>
+
+    <script src="meal_tracker.js"></script>
+</body>
+</html>
