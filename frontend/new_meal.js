@@ -135,19 +135,6 @@ async function getNutrientValues(foodID, amount) {
     };
 };
 
-// Tilføjer event listener til knappen for at gemme det aktuelle måltid
-const saveMealButton = document.getElementById("saveMealButton");
-saveMealButton.addEventListener("click", function () {
-    // Tjekker om måltid har navn og ingredienser før gemning
-    if (currentMeal.name && currentMeal.ingredients.length > 0) {
-        localStorage.setItem(currentMeal.name, JSON.stringify(currentMeal));
-        alert("Måltid gemt!");
-        currentMeal = { name: "", ingredients: [] };
-    } else {
-        alert("Tilføj venligst et navn og mindst en ingrediens til måltidet.");
-    }
-})
-
 // Funktion til at filtrere ingredienser baseret på en søgeforespørgsel
 function filterIngredients(query) {
     return allIngredients.filter(ingredient => {
@@ -170,3 +157,17 @@ refreshButton.addEventListener("click", function (event) {
 // Udfører initial visning af ingredienser
 fetchAndDisplayIngredients();
 })
+
+// Tilføjer event listener til knappen for at gemme det aktuelle måltid
+const saveMealButton = document.getElementById("saveMealButton");
+saveMealButton.addEventListener("click", function () {
+    // Tjekker om måltid har navn og ingredienser før gemning
+    if (currentMeal.name && currentMeal.ingredients.length > 0) {
+        localStorage.setItem(currentMeal.name, JSON.stringify(currentMeal));
+        alert("Måltid gemt!");
+        currentMeal = { name: "", ingredients: [] };
+    } else {
+        alert("Tilføj venligst et navn og mindst en ingrediens til måltidet.");
+    }
+})
+
