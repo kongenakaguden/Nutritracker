@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Activity Tracker</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <div class="navbar">
+        <div class="navbar-logo-container">
+            <img src="images/logo.png" alt="NutriTracker Logo" class="navbar-logo" />
+        </div>
+        <div class="navbar-links">
+            <a href="index.html">Dashboard</a>
+            <a href="meal_creator.html">Meal Creator</a>
+            <a href="meal_tracker.html">Meal Tracker</a>
+            <a href="nutri_report.html">Nutri Report</a>
+            <a href="food_inspector.html">Food Inspector</a>
+            <a href="activityTracker.html" class="active">Activity Tracker</a>
+            <a href="login.html" class="login-btn">Login</a>
+        </div>
+    </div>
+
+    <h2>Activity Tracker</h2>
+
+    <!-- Activity Registration Form -->
+    <form id="activityForm">
+        <label for="activity">Select activity:</label>
+        <select id="activity" name="activity">
+            <option value="Almindelig gang">Almindelig gang</option>
+            <option value="Gang ned af trapper">Gang ned af trapper</option>
+            <option value="Gang op af trapper">Gang op af trapper</option>
+            <option value="Slå græs med manuel græsslåmaskine">Slå græs med manuel græsslåmaskine</option>
+            <option value="Lave mad og redde senge">Lave mad og redde senge</option>
+            <option value="Luge ukrudt">Luge ukrudt</option>
+            <option value="Rydde sne">Rydde sne</option>
+            <option value="Læse eller se TV">Læse eller se TV</option>
+            <option value="Stå oprejst">Stå oprejst</option>
+            <option value="Cykling i roligt tempo">Cykling i roligt tempo</option>
+            <option value="Tørre støv af">Tørre støv af</option>
+            <option value="Vaske gulv">Vaske gulv</option>
+            <option value="Pudse vinduer">Pudse vinduer</option>
+            <option value="Cardio">Cardio</option>
+            <option value="Hård styrketræning">Hård styrketræning</option>
+            <option value="Badminton">Badminton</option>
+            <option value="Volleyball">Volleyball</option>
+            <option value="Bordtennis">Bordtennis</option>
+            <option value="Dans i højt tempo">Dans i højt tempo</option>
+            <option value="Dans i moderat tempo">Dans i moderat tempo</option>
+            <option value="Fodbold">Fodbold</option>
+            <option value="Rask gang">Rask gang</option>
+            <option value="Golf">Golf</option>
+            <option value="Håndbold">Håndbold</option>
+            <option value="Squash">Squash</option>
+            <option value="Jogging">Jogging</option>
+            <option value="Langrend">Langrend</option>
+            <option value="Løb i moderat tempo">Løb i moderat tempo</option>
+            <option value="Løb i hurtigt tempo">Løb i hurtigt tempo</option>
+            <option value="Ridning">Ridning</option>
+            <option value="Skøjteløb">Skøjteløb</option>
+            <option value="Svømning">Svømning</option>
+            <option value="Cykling i højt tempo">Cykling i højt tempo</option>
+            <option value="Bilreparation">Bilreparation</option>
+            <option value="Gravearbejde">Gravearbejde</option>
+            <option value="Landbrugsarbejde">Landbrugsarbejde</option>
+            <option value="Let kontorarbejde">Let kontorarbejde</option>
+            <option value="Male hus">Male hus</option>
+            <option value="Murerarbejde">Murerarbejde</option>
+            <option value="Hugge og slæbe på brænde">Hugge og slæbe på brænde</option>
+        </select><br><br>
+        <label for="duration">Duration (in minutes):</label>
+        <input type="number" id="duration" name="duration" required><br><br>
+        <input type="submit" value="Register Activity">
+    </form>
+    <p id="activityMessage"></p>
+
+    <!-- BMR Calculator -->
+    <form id="bmrForm">
+        <label for="weight">Weight (kg):</label><br>
+        <input type="number" id="weight" name="weight" required><br>
+        <label for="age">Age:</label><br>
+        <input type="number" id="age" name="age" required><br>
+        <label for="gender">Gender:</label><br>
+        <select id="gender" name="gender" required>
+            <option value="male">Male</option>
+            <option value="female">Female</option>
+        </select><br><br>
+        <input type="submit" value="Calculate BMR">
+    </form>
+    <p id="bmrResult"></p>
+
+    <script src="activityTracker.js"></script>
+</body>
+</html>
