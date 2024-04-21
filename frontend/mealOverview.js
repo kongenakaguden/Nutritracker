@@ -47,41 +47,44 @@ document.addEventListener("DOMContentLoaded", function () {
   // Funktion til at vise måltider
   function displayMeals() {
     mealTableBody.innerHTML = ""; // Ryd eksisterende rækker
-    for (let i = 0; i < localStorage.length; i++) {
-      const key = localStorage.key(i);
-      const meal = JSON.parse(localStorage.getItem(key));
 
-      const totalWeight = getTotalWeight(meal);
-      const nutrientValuesPer100g = calculateNutrientValuesPer100g(
-        meal,
-        totalWeight
-      );
+    // Fetch meals from backend
+    fetch('/meal-overview/meals')
+      .then(response => response.json())
+      .then(data => {
+        console.log('Meals fetched:', data);
+        // Loop through fetched meals and display them
+        data.forEach(meal => {
+          const totalWeight = getTotalWeight(meal);
+          const nutrientValuesPer100g = calculateNutrientValuesPer100g(
+            meal,
+            totalWeight
+          );
 
-      // Opret en ny række med måltidsdata
-      const row = document.createElement("tr");
-      row.innerHTML = `
-    <td>${meal.name}</td>
-    <td>${nutrientValuesPer100g.calories.toFixed(2)} Kcal/100g</td>
-    <td>${meal.ingredients.length}</td>
-    <td>N/A</td> <!-- Placeholder for Times Eaten -->
-    <td>Carbohydrates: ${nutrientValuesPer100g.kulhydrater.toFixed(
-      2
-    )}g, Protein: ${nutrientValuesPer100g.protein.toFixed(
-        2
-      )}g, Fat: ${nutrientValuesPer100g.fedt.toFixed(
-        2
-      )}g, Water: ${nutrientValuesPer100g.vand.toFixed(2)}g</td>
-    <td><button class="remove-button" onclick="removeMeal('${key}')">Remove</button></td>
-`;
-      mealTableBody.appendChild(row);
-    }
+          // Opret en ny række med måltidsdata
+          const row = document.createElement("tr");
+          row.innerHTML = `
+            <td>${meal.name}</td>
+            <td>${nutrientValuesPer100g.calories.toFixed(2)} Kcal/100g</td>
+            <td>${meal.ingredients.length}</td>
+            <td>N/A</td> <!-- Placeholder for Times Eaten -->
+            <td>Carbohydrates: ${nutrientValuesPer100g.kulhydrater.toFixed(
+              2
+            )}g, Protein: ${nutrientValuesPer100g.protein.toFixed(
+              2
+            )}g, Fat: ${nutrientValuesPer100g.fedt.toFixed(
+              2
+            )}g, Water: ${nutrientValuesPer100g.vand.toFixed(2)}g</td>
+            <td><button class="remove-button" onclick="removeMeal('${meal.id}')">Remove</button></td>
+          `;
+          mealTableBody.appendChild(row);
+        });
+      })
+      .catch(error => {
+        console.error('Error fetching meals:', error);
+        alert('Error fetching meals. Please try again later.');
+      });
   }
-
-  // Funktion til at fjerne et måltid
-  window.removeMeal = function (key) {
-    localStorage.removeItem(key);
-    displayMeals(); // Opdater tabellen
-  };
 
   displayMeals(); // Initial visning af måltider
 });

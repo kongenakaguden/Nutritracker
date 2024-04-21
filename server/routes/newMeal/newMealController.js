@@ -1,6 +1,6 @@
 // newMealController.js
 const sql = require('mssql');
-const { databaseConfig } = require('../../db');
+const { databaseConfig } = require('../../config');
 
 // Function to save meal data to the database
 const saveMeal = async (req, res) => {
@@ -14,9 +14,9 @@ const saveMeal = async (req, res) => {
         const result = await pool.request()
         .input('name', sql.NVarChar(255), JSON.stringify(mealData.name))
         .input('ingredients', sql.NVarChar(sql.MAX), JSON.stringify(mealData.ingredients))
-        .query('INSERT INTO Meals (name, ingredients) VALUES (@name, @ingredients)');
+        .query('INSERT INTO Nutri.Meals (name, ingredients) VALUES (@name, @ingredients)');
 
-        console.log('Meal saved to din mordatabase');
+        console.log('Meal saved to database');
         res.status(200).json({ message: 'Meal saved to database' });
     } catch (error) {
         console.error('Error saving meal to database:', error);
