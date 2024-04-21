@@ -2,6 +2,8 @@
 const mssql = require('mssql');
 const config = require('./config');
 
+const pool = new mssql.ConnectionPool(config);
+
 async function connectToDatabase() {
   try {
     await mssql.connect(config);
@@ -11,4 +13,4 @@ async function connectToDatabase() {
   }
 }
 
-module.exports = { connectToDatabase };
+module.exports = { pool, connectToDatabase };

@@ -587,3 +587,17 @@ table tbody tr:hover {
     color: #333;
 }
 
+.intake-records .record .edit {
+    padding: 5px 10px;
+    background-color: #ffa500; /* Orange color for edit */
+    color: white;
+    border: none;
+    border-radius: 5px;
+    margin-left: 10px;
+    cursor: pointer;
+    transition: background-color 0.3s; /* Smooth transition on hover */
+}
+
+.intake-records .record .edit:hover {
+    background-color: #cc8400; /* Darker orange on hover */
+}
