@@ -14,8 +14,10 @@ document.addEventListener('DOMContentLoaded', function() {
             gender: registrationForm.gender.value
         };
 
+        console.log('User data:', userData); // Log user data
+
         // Send user data to the server for registration
-        fetch('/register', {
+        fetch('/users/create', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json'
@@ -23,6 +25,7 @@ document.addEventListener('DOMContentLoaded', function() {
             body: JSON.stringify(userData)
         })
         .then(response => {
+            console.log('Response:', response); // Log response
             if (response.ok) {
                 return response.json();
             } else {
@@ -31,8 +34,10 @@ document.addEventListener('DOMContentLoaded', function() {
         })
         .then(data => {
             console.log('User registered successfully:', data);
-            // Optionally, redirect the user to a login page or dashboard
-            window.location.href = '/login.html';
+            alert('User registered successfully');
+            setTimeout(() => {
+                window.location.href = '/login.html';
+            }, 500);
         })
         .catch(error => {
             console.error('Error registering user:', error);

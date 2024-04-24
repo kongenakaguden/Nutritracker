@@ -10,94 +10,39 @@ const fetchMeals = async (req, res) => {
         // Query to fetch meals from the database
         const result = await pool.request().query(`
         SELECT
-    id,
-    name,
-    ingredients,
-    (
-        SELECT
-            ROUND(SUM(CAST(JSON_VALUE(ingredient.nutrients, '$.value') AS FLOAT) * ingredient.amount / 100), 2) AS kulhydrater
-        FROM
-            OPENJSON(Meals.ingredients)
-        WITH
-            (
-                foodName NVARCHAR(255) '$.foodName',
-                amount FLOAT '$.amount',
-                nutrients NVARCHAR(MAX) '$.nutrients' -- Removed AS JSON
-            ) AS ingredient
-    ) AS kulhydrater,
-    (
-        SELECT
-            ROUND(SUM(CAST(JSON_VALUE(ingredient.nutrients, '$.value') AS FLOAT) * ingredient.amount / 100), 2) AS protein
-        FROM
-            OPENJSON(Meals.ingredients)
-        WITH
-            (
-                foodName NVARCHAR(255) '$.foodName',
-                amount FLOAT '$.amount',
-                nutrients NVARCHAR(MAX) '$.nutrients' -- Removed AS JSON
-            ) AS ingredient
-    ) AS protein,
-    (
-        SELECT
-            ROUND(SUM(CAST(JSON_VALUE(ingredient.nutrients, '$.value') AS FLOAT) * ingredient.amount / 100), 2) AS fedt
-        FROM
-            OPENJSON(Meals.ingredients)
-        WITH
-            (
-                foodName NVARCHAR(255) '$.foodName',
-                amount FLOAT '$.amount',
-                nutrients NVARCHAR(MAX) '$.nutrients' -- Removed AS JSON
-            ) AS ingredient
-    ) AS fedt,
-    (
-        SELECT
-            ROUND(SUM(CAST(JSON_VALUE(ingredient.nutrients, '$.value') AS FLOAT) * ingredient.amount / 100), 2) AS kalorier
-        FROM
-            OPENJSON(Meals.ingredients)
-        WITH
-            (
-                foodName NVARCHAR(255) '$.foodName',
-                amount FLOAT '$.amount',
-                nutrients NVARCHAR(MAX) '$.nutrients' -- Removed AS JSON
-            ) AS ingredient
-    ) AS kalorier,
-    (
-        SELECT
-            ROUND(SUM(CAST(JSON_VALUE(ingredient.nutrients, '$.value') AS FLOAT) * ingredient.amount / 100), 2) AS vand
-        FROM
-            OPENJSON(Meals.ingredients)
-        WITH
-            (
-                foodName NVARCHAR(255) '$.foodName',
-                amount FLOAT '$.amount',
-                nutrients NVARCHAR(MAX) '$.nutrients' -- Removed AS JSON
-            ) AS ingredient
-    ) AS vand
+    m.id,
+    m.name,
+    m.ingredients,
+    ROUND(SUM(JSON_VALUE(i.value, '$.nutrients.kulhydrater') * CAST(JSON_VALUE(i.value, '$.amount') AS FLOAT) / totalAmount), 2) AS kulhydrater,
+    ROUND(SUM(JSON_VALUE(i.value, '$.nutrients.protein') * CAST(JSON_VALUE(i.value, '$.amount') AS FLOAT) / totalAmount), 2) AS protein,
+    ROUND(SUM(JSON_VALUE(i.value, '$.nutrients.fedt') * CAST(JSON_VALUE(i.value, '$.amount') AS FLOAT) / totalAmount), 2) AS fedt,
+    ROUND(SUM(JSON_VALUE(i.value, '$.nutrients.kalorier') * CAST(JSON_VALUE(i.value, '$.amount') AS FLOAT) / totalAmount), 2) AS kalorier,
+    ROUND(SUM(JSON_VALUE(i.value, '$.nutrients.vand') / CAST(JSON_VALUE(i.value, '$.amount') AS FLOAT) * 100), 2) AS vand
 FROM
-    Meals
+    Nutri.Meals AS m
+CROSS APPLY
+    OPENJSON(m.ingredients) AS i
+CROSS APPLY
+    (SELECT SUM(CAST(JSON_VALUE(i.value, '$.amount') AS FLOAT)) AS totalAmount FROM OPENJSON(m.ingredients) AS i) AS t
+GROUP BY
+    m.id, m.name, m.ingredients;
         `);
         
         const meals = result.recordset.map(meal => {
-            const nutrientValues = meal.nutrient_values;
             return {
                 id: meal.id,
                 name: meal.name,
                 ingredients: JSON.parse(meal.ingredients),
-                nutrient_values: nutrientValues ? {
-                    kulhydrater: nutrientValues.kulhydrater || 0,
-                    protein: nutrientValues.protein || 0,
-                    fedt: nutrientValues.fedt || 0,
-                    kalorier: nutrientValues.kalorier || 0,
-                    vand: nutrientValues.vand || 0
-                } : {
-                    kulhydrater: 0,
-                    protein: 0,
-                    fedt: 0,
-                    kalorier: 0,
-                    vand: 0
+                nutrient_values: {
+                    kulhydrater: meal.kulhydrater || 0,
+                    protein: meal.protein || 0,
+                    fedt: meal.fedt || 0,
+                    kalorier: meal.kalorier || 0,
+                    vand: meal.vand || 0
                 }
             };
         });
+        
 
         res.status(200).json(meals); // Send the meals with nutrient values as JSON response
     } catch (error) {
