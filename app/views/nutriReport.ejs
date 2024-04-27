@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Nutri Report</title>
+    <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="/css/styles.css">
+</head>
+<body>
+
+    <% include partials/header { loggedIn: loggedIn } %>
+
+    <%- include('partials/navbar', { active: 'nutriReport' }) %>
+    <div class="report-container">
+        <h2>Nutrition Report</h2>
+        <table>
+            <thead>
+                <tr>
+                    <th>Date</th>
+                    <th>Total Meals</th>
+                    <th>Water (L)</th>
+                    <th>Kcal Consumed</th>
+                    <th>Protein (g)</th>
+                    <th>Fat (g)</th>
+                    <th>Fibre (g)</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr> <!-- Eksempel på hvordan en række kunne se ud-->
+                    <td>14-12-2023</td>
+                    <td>3</td>
+                    <td>2</td>
+                    <td>1500</td>
+                    <td>75</td> 
+                    <td>50</td>
+                    <td>30</td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+
+    <script src="/js/nutriReport.js"></script>
+</body>
+</html>

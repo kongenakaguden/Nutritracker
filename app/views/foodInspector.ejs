@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Food Inspector</title>
+    <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="/css/styles.css">
+</head>
+<body>
+    <% include partials/header { loggedIn: loggedIn } %>
+
+
+    <%- include('partials/navbar', { active: 'foodInspector' }) %>
+
+    <div class="search-section">
+        <input type="text" id="searchInput" placeholder="Search for a food item...">
+        <button id="searchButton">Search</button>
+    </div>
+    <div id="foodDetailsContainer"></div>
+    <div class="food-inspector">
+        <div class="food-item">
+            <h2 id="foodName">Løg, rå (Onion, Raw)</h2>
+            <div class="food-details">
+                <div class="food-info">
+                    <p id="productID"><strong>Product id:</strong> 716</p>
+                    <p id="taxonomic"><strong>Taxonomisk:</strong> Allium cepa (Linnaeus, 1753)</p>
+                    <p id="foodGroup"><strong>FødevareGruppe:</strong> Rod- og knoldgrøntsager</p>
+                </div>
+                <div class="nutrition-info">
+                    <h3>Nutrition</h3>
+                    <p id="energyKj"><strong>Energy (kJ):</strong> 183 kJ</p>
+                    <p id="energyKcal"><strong>Energy (kcal):</strong> 43 kcal</p>
+                    <p id="protein"><strong>Protein:</strong> 1.2 g</p>
+                    <p id="fibre"><strong>KostFibre:</strong> 1.9 g</p>
+                    <p id="fedt"><strong>Fedt:</strong> 0.1 g</p>
+                    <p id="kulhydrater"><strong>Kulhydrat:</strong> 8.4 g</p>
+                    <p id="vand"><strong>Vand:</strong> 87.9 g</p>
+                    <p id="tørstof"><strong>Tørstof:</strong> 12.1 g</p>
+                </div>
+                <div class="food-image">
+                    <h3>Product image</h3>
+                    <img src="images/løgforfanden.jpg.webp" alt="Onion" />
+                </div>
+            </div>
+        </div>
+    </div>
+    <script src="/js/food_inspector.js"></script>
+</body>
+</html>

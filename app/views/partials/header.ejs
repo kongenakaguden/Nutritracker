@@ -1,0 +1,14 @@
+<div class="header">
+    <!-- Login and create user buttons -->
+    <div class="auth-buttons">
+        <a href="/login">Login</a>
+        <a href="/create-user">Create User</a>
+    </div>
+
+    <!-- My Profile button (visible when logged in) -->
+    <% if (loggedIn) { %>
+        <div class="profile-button">
+            <a href="/profile">My Profile</a>
+        </div>
+    <% } %>
+</div>
