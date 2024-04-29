@@ -6,23 +6,30 @@ const sql = require('mssql');
 async function getProfile(req, res) {
     try {
         console.log('Fetching user profile...');
-        
+        console.log('User object:', req.user);
+
+        // Ensure req.user exists
+        if (!req.user) {
+            console.log('User data not found in session');
+            return res.status(401).json({ message: 'User data not found in session' });
+        }
+
         // Extract user ID from the request object
-        const { userId } = req.user;
-        console.log('User ID:', userId);
+        const { UserId } = req.user;
+        console.log('User ID:', UserId);
 
         // Connect to the database
         const pool = await sql.connect(databaseConfig);
-        console.log('Connected to the database');
+console.log('Connected to the database');
 
-        // Execute SQL query to fetch user profile
-        const result = await pool.request()
-            .input('userId', sql.Int, userId)
-            .query(`
-                SELECT *
-                FROM Nutri.Users
-                WHERE UserId = @userId
-            `);
+// Execute SQL query to fetch user profile
+const result = await pool.request()
+    .input('userId', sql.Int, UserId) // Use UserId instead of userId
+    .query(`
+        SELECT *
+        FROM Nutri.Users
+        WHERE UserId = @userId
+    `);
 
         // Check if user profile exists
         if (!result.recordset.length) {

@@ -32,10 +32,20 @@ async function login(req, res) {
             return res.status(401).json({ message: 'Invalid username or password' });
         }
 
-        } catch (error) {
+        // Set loggedIn session variable
+        req.session.loggedIn = true;
+
+        req.session.user = user;
+
+        console.log('User logged in successfully');
+
+        // Redirect or send response
+        res.status(200).json({ message: 'Login successful' });
+
+    } catch (error) {
         console.error('Error logging in:', error);
-        res.status(500).json({ message: 'Internal   server error' });
-        }
+        res.status(500).json({ message: 'Internal server error' });
     }
+}
 
 module.exports = { login };

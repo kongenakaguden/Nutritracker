@@ -72,8 +72,8 @@ body {
     border-radius: 10px;
     padding: 20px;
     box-shadow: 0 2px 5px rgba(0,0,0,0.1);
-    margin-top: 20px; /* Add margin to accommodate the category label */
-    position: relative; /* For the category label positioning */
+    margin: 20px auto; /* Center the container horizontally */
+    max-width: 800px; /* Limit the maximum width of the container */
 }
 
 /* Update dashboard data styles */
@@ -97,6 +97,87 @@ body {
     gap: 40px; /* Increase gap for spacing */
     padding: 20px;
 }
+
+
+/* Style the forms */
+#activityForm,
+#bmrForm {
+    width: 80%; /* Adjust the width as needed */
+    padding: 20px;
+    background-color: #ffffff;
+    border-radius: 10px;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+}
+
+#activityForm label,
+#bmrForm label {
+    display: block;
+    margin-bottom: 10px;
+}
+
+#activityForm select,
+#activityForm input[type="number"],
+#bmrForm select,
+#bmrForm input[type="number"] {
+    width: 100%;
+    padding: 10px;
+    margin-bottom: 20px;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+}
+
+#activityForm input[type="submit"],
+#bmrForm input[type="submit"] {
+    padding: 10px 20px;
+    background-color: #91c789;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+
+#activityForm input[type="submit"]:hover,
+#bmrForm input[type="submit"]:hover {
+    background-color: #6a9955;
+}
+
+#activityMessage,
+#bmrResult {
+    text-align: center;
+    margin-top: 20px;
+    color: #333;
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 /* Meal creator*/
 
@@ -499,94 +580,6 @@ table tbody tr:hover {
     }
 }
 
-/* Activity Tracker styles */
-#activityForm {
-    max-width: 500px;
-    margin: 20px auto;
-    padding: 20px;
-    background-color: #ffffff;
-    border-radius: 10px;
-    box-shadow: 0 2px 5px rgba(0,0,0,0.1);
-}
-
-#activityForm label {
-    display: block;
-    margin-bottom: 10px;
-}
-
-#activityForm select,
-#activityForm input[type="number"] {
-    width: 100%;
-    padding: 10px;
-    margin-bottom: 20px;
-    border: 1px solid #ddd;
-    border-radius: 5px;
-}
-
-#activityForm input[type="submit"] {
-    padding: 10px 20px;
-    background-color: #91c789;
-    color: white;
-    border: none;
-    border-radius: 5px;
-    cursor: pointer;
-    transition: background-color 0.3s;
-}
-
-#activityForm input[type="submit"]:hover {
-    background-color: #6a9955;
-}
-
-#activityMessage {
-    text-align: center;
-    margin-top: 20px;
-    color: #333;
-}
-
-/* BMR Calculator styles */
-#bmrForm {
-    max-width: 500px;
-    margin: 20px auto;
-    padding: 20px;
-    background-color: #ffffff;
-    border-radius: 10px;
-    box-shadow: 0 2px 5px rgba(0,0,0,0.1);
-}
-
-#bmrForm label {
-    display: block;
-    margin-bottom: 10px;
-}
-
-#bmrForm input[type="number"],
-#bmrForm select {
-    width: 100%;
-    padding: 10px;
-    margin-bottom: 20px;
-    border: 1px solid #ddd;
-    border-radius: 5px;
-}
-
-#bmrForm input[type="submit"] {
-    padding: 10px 20px;
-    background-color: #91c789;
-    color: white;
-    border: none;
-    border-radius: 5px;
-    cursor: pointer;
-    transition: background-color 0.3s;
-}
-
-#bmrForm input[type="submit"]:hover {
-    background-color: #6a9955;
-}
-
-#bmrResult {
-    text-align: center;
-    margin-top: 20px;
-    color: #333;
-}
-
 .intake-records .record .edit {
     padding: 5px 10px;
     background-color: #ffa500; /* Orange color for edit */
@@ -600,4 +593,11 @@ table tbody tr:hover {
 
 .intake-records .record .edit:hover {
     background-color: #cc8400; /* Darker orange on hover */
+}
+
+.profile-info{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 20px;
 }

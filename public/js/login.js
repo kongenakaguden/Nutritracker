@@ -30,9 +30,7 @@ document.addEventListener('DOMContentLoaded', function() {
         .then(data => {
             console.log('Login successful:', data);
             // Redirect to the homepage after a successful login
-            setTimeout(() => {
-                window.location.href = '/'; // Redirect to homepage
-            }, 3000); // Wait for 3 seconds before redirecting
+            window.location.href = '/';
         })
         .catch(error => {
             console.error('Error logging in:', error);

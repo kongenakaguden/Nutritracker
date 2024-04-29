@@ -12,16 +12,16 @@
   </head>
   <body>
 
-    <% include partials/header { loggedIn: loggedIn } %>
+    <%- include('partials/header', {loggedIn: loggedIn}) %>
 
-    <%- include('partials/navbar', { active: 'meal_creator' }) %>
+    <%- include('partials/navbar', { active: 'mealCreator' }) %>
 
 
     <div class="meal-overview-container">
       <h1>Meal Creator</h1>
       <button
         id="createMealButton"
-        onclick="window.location.href='new_meal.html'"
+        onclick="window.location.href='new-meal'"
       >
         Create New Meal
       </button>

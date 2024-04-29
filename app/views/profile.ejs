@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>My Profile</title>
+    <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="/css/styles.css">
+</head>
+<body>
+<%- include ('partials/header', { loggedIn: loggedIn }) %>
+<%- include('partials/navbar', { active: 'null' }) %>    
+
+    <!-- Profile Content -->
+    <div class="profile-container">
+        <h1>My Profile</h1>
+        <div id="profileInfo">
+            <!-- User information will be displayed here -->
+        </div>
+        <button id="editProfileButton">Edit Profile</button>
+        <button id="deleteAccountButton">Delete Account</button>
+    </div>
+
+    <script src="/js/profile.js"></script>
+</body>
+</html>

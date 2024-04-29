@@ -7,14 +7,14 @@
     <link rel="stylesheet" href="/css/styles.css">
 </head>
 <body>
-    <% include partials/header { loggedIn: loggedIn } %>
+    <%- include ('partials/header', {loggedIn: loggedIn}) %>
 
 
     <%- include('partials/navbar', { active: 'activityTracker' }) %>
 
 
     <h2>Activity Tracker</h2>
-
+<div class="form-container">
     <!-- Activity Registration Form -->
     <form id="activityForm">
         <label for="activity">Select activity:</label>
@@ -80,7 +80,7 @@
         <input type="submit" value="Calculate BMR">
     </form>
     <p id="bmrResult"></p>
-
+</div>
     <script src="/js/activityTracker.js"></script>
 </body>
 </html>
