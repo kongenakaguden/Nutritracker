@@ -1,20 +1,13 @@
 // logoutController.js
 
-async function logout(req, res) {
-    try {
-        // Clear the session
-        req.session.destroy(err => {
-            if (err) {
-                console.error('Error destroying session:', err);
-                return res.status(500).json({ message: 'Internal server error' });
-            }
-            // Redirect the user to the login page after logout
-            res.redirect('/login');
-        });
-    } catch (error) {
-        console.error('Error logging out:', error);
-        res.status(500).json({ message: 'Internal server error' });
-    }
-}
+function logout(req, res) {
+    req.session.destroy(err => {
+        if (err) {
+            return res.status(500).json({ message: 'Error logging out' });
+        }
+        res.clearCookie('connect.sid'); // replace 'connect.sid' with the name of your session cookie if it's different
+        res.status(200).json({ message: 'Logged out successfully' });
+    });
+};
 
 module.exports = { logout };

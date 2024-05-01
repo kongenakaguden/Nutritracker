@@ -48,45 +48,5 @@ const result = await pool.request()
     }
 }
 
-// Controller function for updating user profile
-async function updateProfile(req, res) {
-    try {
-        // Extract user details from request body
-        const { userId } = req.user; // Assuming userId is included in the request after authentication
-        const { username, email, weight, age, gender } = req.body;
+module.exports = { getProfile };
 
-        // Connect to the database
-        const pool = await sql.connect(databaseConfig);
-
-        // Update user profile in the database
-        const result = await pool.request()
-            .input('userId', sql.Int, userId)
-            .input('username', sql.NVarChar(255), username)
-            .input('email', sql.NVarChar(255), email)
-            .input('weight', sql.Decimal(10, 2), weight)
-            .input('age', sql.Int, age)
-            .input('gender', sql.NVarChar(50), gender)
-            .query(`
-                UPDATE Nutri.Users
-                SET username = @username,
-                    email = @email,
-                    weight = @weight,
-                    age = @age,
-                    gender = @gender
-                WHERE UserId = @userId
-            `);
-
-        // Check if any rows were affected
-        if (result.rowsAffected[0] === 0) {
-            return res.status(404).json({ message: 'User not found or no changes were made' });
-        }
-
-        // Send success response
-        res.status(200).json({ message: 'User profile updated successfully' });
-    } catch (error) {
-        console.error('Error updating user profile:', error);
-        res.status(500).json({ message: 'Internal server error' });
-    }
-}
-
-module.exports = { getProfile, updateProfile };

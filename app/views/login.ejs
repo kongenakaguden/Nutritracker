@@ -7,7 +7,9 @@
     <link rel="stylesheet" href="/css/styles.css">
 </head>
 <body>
-    <%- include('partials/navbar', { active: 'dashboard' }) %>
+    <%- include ('partials/header', {loggedIn: loggedIn}) %>
+
+    <%- include('partials/navbar', { active: 'null' }) %>
 
     <div class="container">
         <h2>Login</h2>

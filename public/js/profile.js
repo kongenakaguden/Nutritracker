@@ -16,12 +16,11 @@ document.addEventListener('DOMContentLoaded', function() {
             console.log('User profile data:', profileData);
             updateProfileUI(profileData);
         } catch (error) {
+
             console.error('Error fetching user profile:', error);
         }
     }
 
-    // Function to update the UI with profile data
-    // Function to update the UI with profile data
 // Function to update the UI with profile data
 function updateProfileUI(profileData) {
     console.log('Updating profile UI with profile data:', profileData);
@@ -52,18 +51,28 @@ function updateProfileUI(profileData) {
             console.log(`Added property '${key}' with value '${value}' to profile UI`);
         }
     }
-    // Log completion of profile UI update
+
+    document.getElementById('logout-button').addEventListener('click', async function() {
+        try {
+            // Send POST request to logout endpoint
+            const response = await fetch('/users/logout', {
+                method: 'POST',
+                credentials: 'same-origin'
+            });
+
+            if (!response.ok) {
+                throw new Error('Failed to log out');
+            }
+
+            // Handle successful response
+            console.log('Logged out successfully');
+            window.location.href = '/login'; 
+        } catch (error) {
+            console.error('Error logging out:', error);
+        }
+    });
     console.log('Profile UI update completed');
 }
-
-
-
-    // Function to handle edit profile button click
-    document.getElementById('editProfileButton').addEventListener('click', () => {
-        console.log('Edit profile button clicked');
-        // Redirect to edit profile page or show edit profile form
-        window.location.href = 'edit_profile.html'; // Redirect to edit profile page
-    });
 
     // Initialize profile page
     console.log('Initializing profile page...');

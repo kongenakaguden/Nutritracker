@@ -33,9 +33,7 @@ const viewsPath = path.join(__dirname, './app', 'views');
 app.set('views', viewsPath);
 
 // Serve static files from the 'views' directory
-
 app.get('/', (req, res) => {
-  console.log('Index route hit');
   res.render('index', { loggedIn: req.session.loggedIn });
 });
 
@@ -44,63 +42,51 @@ app.get('/meal-creator', (req, res) => {
 });
 
 app.get('/meal-tracker', (req, res) => {
-  res.render('mealTracker');
+  res.render('mealTracker', { loggedIn: req.session.loggedIn });
 });
 
 app.get('/activity-tracker', (req, res) => {
-  res.render('activityTracker');
+  res.render('activityTracker', { loggedIn: req.session.loggedIn });
 });
 
 app.get('/food-inspector', (req, res) => {
-  res.render('foodInspector');
+  res.render('foodInspector', { loggedIn: req.session.loggedIn });
 });
 
 app.get('/nutri-report', (req, res) => {
-  res.render('nutriReport');
+  res.render('nutriReport', { loggedIn: req.session.loggedIn });
 });
 
 app.get('/login', (req, res) => {
-  res.render('login');
+  res.render('login', { loggedIn: req.session.loggedIn });
 });
 
 app.get('/profile', (req, res) => {
-  res.render('profile');
+  res.render('profile', { loggedIn: req.session.loggedIn });
 });
 
 app.get('/create-user', (req, res) => {
-  res.render('createUser');
+  res.render('createUser', { loggedIn: req.session.loggedIn });
 });
 
 app.get('/new-meal', (req, res) => {
-  res.render('newMeal');
+  res.render('newMeal', { loggedIn: req.session.loggedIn });
 });
 
 app.get('/registration', (req, res) => {
-  res.render('registration');
+  res.render('registration', { loggedIn: req.session.loggedIn });
+});
+
+app.get('/edit-profile', (req, res) => {
+  res.render('editProfile', { loggedIn: req.session.loggedIn });
 });
 
 connectToDatabase();
 
 // Define routes
 const routes = require('./app/routes');
-const activityRoutes = require('./app/routes/activityTracker/activityRoutes');
-const mealTrackerRoutes = require('./app/routes/mealTracker/mealTrackerRoutes');
-const newMealRouter = require('./app/routes/newMeal/newMealRoutes');
-const mealOverviewRouter = require('./app/routes/mealOverview/mealOverviewRoutes');
-const createUserRouter = require('./app/routes/users/create');
-const loginUserRouter = require('./app/routes/users/login');
-const profileRouter = require('./app/routes/users/profile');
-const logoutRouter = require('./app/routes/users/logout');
 
 app.use('/', routes);
-app.use('/activity', activityRoutes);
-app.use('/meal-tracker', mealTrackerRoutes);
-app.use('/meals', newMealRouter);
-app.use('/meal-overview', mealOverviewRouter);
-app.use('/users', createUserRouter);
-app.use('/users', loginUserRouter);
-app.use('/users', logoutRouter);
-app.use('/users', profileRouter);
 
 // Start the server
 const PORT = process.env.PORT || 3000;

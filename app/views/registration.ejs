@@ -7,6 +7,9 @@
     <link rel="stylesheet" href="/css/styles.css"> <!-- You can link your CSS file here -->
 </head>
 <body>
+    <%- include ('partials/header', {loggedIn: loggedIn}) %>
+    <%- include('partials/navbar', { active: 'null' }) %>
+    
     <h1>User Registration</h1>
     <form id="registrationForm" action="javascript:void(0)">
         <div>

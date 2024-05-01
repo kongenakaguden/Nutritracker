@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Edit Profile</title>
+    <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="/css/styles.css">
+</head>
+<body>
+    <% include ('partials/header', {loggedIn: loggedIn}) %>
+    <% include('partials/navbar', { active: 'null' }) %> 
+
+    <!-- Edit Profile Content -->
+    <div class="edit-profile-container">
+        <h1>Edit Profile</h1>
+        <!-- Add form for editing profile information -->
+        <form id="edit-profile-form" action="/users/update-profile" method="POST">
+    
+            <!-- Example: -->
+            <label for="username">Username:</label>
+            <input type="text" id="username" name="username">
+            <!-- Add input fields for other profile information -->
+            <!-- Example: -->
+            <label for="email">Email:</label>
+            <input type="email" id="email" name="email">
+            <!-- Add input fields for other profile information -->
+            <!-- Example: -->
+            <label for="weight">Weight:</label>
+            <input type="number" id="weight" name="weight">
+            <!-- Add input fields for other profile information -->
+            <!-- Example: -->
+            <label for="age">Age:</label>
+            <input type="number" id="age" name="age">
+            <!-- Add input fields for other profile information -->
+            <!-- Example: -->
+            <label for="gender">Gender:</label>
+            <select id="gender" name="gender">
+                <option value="male">Male</option>
+                <option value="female">Female</option>
+            </select>
+            <!-- Add more input fields for other profile information -->
+            <!-- Add a submit button to submit the edited profile information -->
+            <button type="submit">Save Changes</button>
+        </form>
+    </div>
+
+    <script src="/js/editProfile.js"></script>
+</body>
+</html>

@@ -1,10 +1,9 @@
-// routes/users/logout.js
+// routes/logout.js
 
 const express = require('express');
 const router = express.Router();
-const logoutController = require('../../views/controllers/logoutController');
+const { logout } = require('../../views/controllers/logoutController');
 
-// Route for user logout
-router.get('/logout', logoutController.logout);
+router.post('/logout', logout);
 
 module.exports = router;

@@ -1,3 +1,4 @@
+//index.js
 const express = require('express');
 const router = express.Router();
 
@@ -8,8 +9,10 @@ const newMealRouter = require('./newMeal/newMealRoutes');
 const mealOverviewRouter = require('./mealOverview/mealOverviewRoutes'); 
 const createUserRouter = require('./users/create');
 const loginUserRouter = require('./users/login');
-const logoutRouter = require('./users/logout'); // Import the logout route file
+const logoutRouter = require('./users/logout');
 const profileRouter = require('./users/profile');
+const editProfileRouter = require('./users/editProfile'); // Add the route for editing profile
+
 
 // Mount route files
 router.use('/activity', activityRouter);
@@ -20,5 +23,6 @@ router.use('/users', createUserRouter);
 router.use('/users', loginUserRouter);
 router.use('/users', logoutRouter); // Mount the logout route
 router.use('/users', profileRouter);
+router.use('/users', editProfileRouter);
 
 module.exports = router;
