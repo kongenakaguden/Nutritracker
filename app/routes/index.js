@@ -12,6 +12,8 @@ const loginUserRouter = require('./users/login');
 const logoutRouter = require('./users/logout');
 const profileRouter = require('./users/profile');
 const editProfileRouter = require('./users/editProfile'); // Add the route for editing profile
+const deleteRouter = require('./users/delete');
+
 
 
 // Mount route files
@@ -24,5 +26,7 @@ router.use('/users', loginUserRouter);
 router.use('/users', logoutRouter); // Mount the logout route
 router.use('/users', profileRouter);
 router.use('/users', editProfileRouter);
+router.use('/users', deleteRouter);
+
 
 module.exports = router;

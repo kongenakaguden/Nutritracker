@@ -153,7 +153,7 @@ saveMealButton.addEventListener("click", function () {
 async function saveMealToServer(mealData) {
     try {
         console.log("Meal data:", mealData); // Log the meal data before sending the request
-        const response = await fetch('/meals/saveMeal', {
+        const response = await fetch('/new-meal/saveMeal', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json'

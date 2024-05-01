@@ -1,14 +1,22 @@
+//mealsOverviewController.js
+
 const sql = require('mssql');
 const { databaseConfig } = require('../../../config/config');
 
+// Function to fetch meals for overview
 // Function to fetch meals for overview
 const fetchMeals = async (req, res) => {
     try {
         // Connect to the database
         const pool = await sql.connect(databaseConfig);
 
+        // Get the user id from the session
+        const userId = req.session.user.UserId;
+
         // Query to fetch meals from the database
-        const result = await pool.request().query(`
+        const result = await pool.request()
+        .input('userId', sql.Int, userId)
+        .query(`
         SELECT
     m.id,
     m.name,
@@ -24,6 +32,8 @@ CROSS APPLY
     OPENJSON(m.ingredients) AS i
 CROSS APPLY
     (SELECT SUM(CAST(JSON_VALUE(i.value, '$.amount') AS FLOAT)) AS totalAmount FROM OPENJSON(m.ingredients) AS i) AS t
+WHERE
+    m.UserId = @userId
 GROUP BY
     m.id, m.name, m.ingredients;
         `);
