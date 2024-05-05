@@ -1,7 +1,7 @@
 const express = require('express');
 const session = require('express-session');
 const path = require('path');
-const { connectToDatabase } = require('./config/db');
+const { poolPromise } = require('./config/config');
 const setUser = require('./app/views/auth/setUser'); // Update the path to the setUser middleware
 
 const app = express();
@@ -80,8 +80,6 @@ app.get('/registration', (req, res) => {
 app.get('/edit-profile', (req, res) => {
   res.render('editProfile', { loggedIn: req.session.loggedIn });
 });
-
-connectToDatabase();
 
 // Define routes
 const routes = require('./app/routes');

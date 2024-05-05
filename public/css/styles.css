@@ -601,3 +601,54 @@ table tbody tr:hover {
     align-items: center;
     margin-bottom: 20px;
 }
+
+/* Ingredient Tracker Form Styling */
+.ingredient-tracker-container {
+    max-width: 600px;
+    margin: 20px auto;
+    padding: 20px;
+    background-color: #ffffff;
+    border-radius: 10px;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+}
+
+.ingredient-tracker-container h2 {
+    text-align: center;
+    color: #333;
+    margin-bottom: 20px;
+}
+
+.ingredient-tracker-container form {
+    display: grid;
+    gap: 20px;
+}
+
+.ingredient-tracker-container label {
+    display: block;
+    margin-bottom: 5px;
+    color: #555;
+}
+
+.ingredient-tracker-container input[type="text"],
+.ingredient-tracker-container input[type="number"],
+.ingredient-tracker-container textarea {
+    width: 100%;
+    padding: 10px;
+    margin-bottom: 10px; /* Margin bottom for spacing */
+    border: 1px solid #ddd;
+    border-radius: 5px;
+}
+
+.ingredient-tracker-container button {
+    padding: 10px 20px;
+    background-color: #91c789;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+
+.ingredient-tracker-container button:hover {
+    background-color: #6a9955;
+}

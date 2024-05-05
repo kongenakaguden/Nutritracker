@@ -3,47 +3,38 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>User Registration</title>
-    <link rel="stylesheet" href="/css/styles.css"> <!-- You can link your CSS file here -->
+    <title>Create Profile</title>
+    <link rel="stylesheet" href="/css/styles.css">
 </head>
 <body>
-    <%- include ('partials/header', {loggedIn: loggedIn}) %>
-    <%- include('partials/navbar', { active: 'null' }) %>
-    
-    <h1>User Registration</h1>
-    <form id="registrationForm" action="javascript:void(0)">
-        <div>
-            <label for="username">Username:</label>
-            <input type="text" id="username" name="username" required>
-        </div>
-        <div>
-            <label for="email">Email:</label>
-            <input type="email" id="email" name="email" required>
-        </div>
-        <div>
-            <label for="password">Password:</label>
-            <input type="password" id="password" name="password" required>
-        </div>
-        <div>
-            <label for="weight">Weight (kg):</label>
-            <input type="number" id="weight" name="weight" required>
-        </div>
-        <div>
-            <label for="age">Age:</label>
-            <input type="number" id="age" name="age" required>
-        </div>
-        <div>
-            <label for="gender">Gender:</label>
-            <select id="gender" name="gender" required>
-                <option value="male">Male</option>
-                <option value="female">Female</option>
-                <option value="other">Other</option>
-            </select>
-        </div>
-        <button type="submit">Register</button>
-    </form>
+    <%- include('partials/header', {loggedIn: loggedIn}) %>
 
-    <script src="/js/registration.js">
-    </script> <!-- You can include the JavaScript code inline or link it from an external file -->
+    <%- include('partials/navbar', { active: 'createProfile' }) %>
+    <div class="container">
+        <h2>Create Profile</h2>
+        <form id="registrationForm">
+            <label for="username">Username:</label><br>
+            <input type="text" id="username" name="username" required><br>
+            <label for="email">Email:</label><br>
+            <input type="email" id="email" name="email" required><br>
+            <label for="password">Password:</label><br>
+            <input type="password" id="password" name="password" required><br>
+            <label for="weight">Weight (kg):</label><br>
+            <input type="number" id="weight" name="weight" min="0" required><br>
+            <label for="age">Age:</label><br>
+            <input type="number" id="age" name="age" min="0" required><br>
+            <label for="gender">Gender:</label><br>
+            <select id="gender" name="gender" required>
+                <option value="">Select</option>
+                <option value="Male">Male</option>
+                <option value="Female">Female</option>
+                <option value="Other">Other</option>
+            </select><br><br>
+            <input type="submit" value="Create Profile">
+        </form>
+        <p id="message"></p>
+    </div>
+    
+    <script src="/js/registration.js"></script>
 </body>
 </html>

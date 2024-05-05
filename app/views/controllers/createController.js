@@ -2,7 +2,7 @@
 
 const sql = require('mssql');
 const bcrypt = require('bcrypt');
-const { databaseConfig } = require('../../../config/config');
+const { poolPromise } = require('../../../config/config');
 
 async function createUser(req, res) {
     try {
@@ -11,7 +11,7 @@ async function createUser(req, res) {
         console.log('Received user data:', req.body);
 
         // Connect to the database
-        const pool = await sql.connect(databaseConfig);
+        const pool = await poolPromise;
 
         // Check if user already exists
         const existingUser = await pool.request()

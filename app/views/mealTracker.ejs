@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -18,23 +19,33 @@
         <h2>Meal Tracker</h2>
         <form id="trackMealForm">
             <label for="recipeSelect">Select Recipe:</label>
-            <select id="recipeSelect" name="recipe" required>
-            </select>
+            <select id="meal-dropdown">
+            
+              </select>
 
             <label for="mealWeight">Weight of Meal (grams):</label>
             <input type="number" id="mealWeight" name="mealWeight" required>
 
             <label for="mealTime">Time of Meal:</label>
-            <input type="time" id="mealTime" name="mealTime" value="" required>
+            <input type="datetime-local" id="mealTime" name="mealTime" value="" required>
 
             <label for="drinkVolume">Volume of Drink (liters):</label>
             <input type="number" id="drinkVolume" name="drinkVolume" step="0.1" required>
 
             <label for="drinkTime">Time of Drink:</label>
-            <input type="time" id="drinkTime" name="drinkTime" value="" required>
+            <input type="datetime-local" id="drinkTime" name="drinkTime" value="" required>
 
             <button type="submit">Register Intake</button>
         </form>
+
+        <input type="text" id="search-box" placeholder="Search Ingredients...">
+        <button id="search-button">Search</button>
+        <ul id="ingredientsList"></ul>
+        
+
+ <!-- List of ingredients populated from the API -->
+        </div>
+           
 
         <div class="intake-records">
             <h3>Your Intake Records</h3>

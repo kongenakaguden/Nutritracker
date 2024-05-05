@@ -1,7 +1,6 @@
 // newMealController.js
 const sql = require('mssql');
-const { databaseConfig } = require('../../../config/config');
-
+const { poolPromise } = require('../../../config/config');
 // Function to save meal data to the database
 const saveMeal = async (req, res) => {
     // Get the meal data from the request body
@@ -17,7 +16,7 @@ const saveMeal = async (req, res) => {
 
     try {
         // Connect to the database
-        const pool = await sql.connect(databaseConfig);
+        const pool = await poolPromise;
 
         // Insert meal data into the Meals table
         const result = await pool.request()

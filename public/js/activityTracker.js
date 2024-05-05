@@ -67,7 +67,7 @@ document.addEventListener('DOMContentLoaded', function() {
         };
 
         // Make a POST request to the server with the calculated data
-        fetch('/activity', {
+        fetch('/activity/track', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json'

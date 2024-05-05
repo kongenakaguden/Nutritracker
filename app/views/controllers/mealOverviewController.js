@@ -1,14 +1,13 @@
 //mealsOverviewController.js
 
 const sql = require('mssql');
-const { databaseConfig } = require('../../../config/config');
-
+const { poolPromise } = require('../../../config/config');
 // Function to fetch meals for overview
 // Function to fetch meals for overview
 const fetchMeals = async (req, res) => {
     try {
         // Connect to the database
-        const pool = await sql.connect(databaseConfig);
+        const pool = await poolPromise;
 
         // Get the user id from the session
         const userId = req.session.user.UserId;

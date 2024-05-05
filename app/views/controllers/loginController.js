@@ -1,14 +1,13 @@
 const bcrypt = require('bcrypt');
 const jwt = require('jsonwebtoken');
-const { databaseConfig } = require('../../../config/config');
-const sql = require('mssql');
+const { poolPromise } = require('../../../config/config');const sql = require('mssql');
 
 async function login(req, res) {
     const { username, password } = req.body;
 
     try {
         // Connect to the database
-        const pool = await sql.connect(databaseConfig);
+        const pool = await poolPromise;
 
         // Retrieve user from database
         const result = await pool.request()

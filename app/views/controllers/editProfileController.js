@@ -1,7 +1,6 @@
 // server/controllers/editProfileController.js
 
-const { databaseConfig } = require('../../../config/config');
-const sql = require('mssql');
+const { poolPromise } = require('../../../config/config');const sql = require('mssql');
 
 // Controller function for rendering the edit profile page
 async function renderEditProfile(req, res) {
@@ -27,7 +26,7 @@ async function updateProfile(req, res) {
         const { username, email, weight, age, gender } = req.body;
 
         // Connect to the database
-        const pool = await sql.connect(databaseConfig);
+        const pool = await poolPromise;
 
         // Execute SQL UPDATE statement to update user profile
         const result = await pool.request()
@@ -62,7 +61,7 @@ async function updateProfile(req, res) {
 
 // Function to fetch user profile
 async function fetchProfile(userId) {
-    const pool = await sql.connect(databaseConfig);
+    const pool = await poolPromise;
 
     const result = await pool.request()
         .input('userId', sql.Int, userId)

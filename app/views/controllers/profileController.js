@@ -1,6 +1,5 @@
 // server/routes/users/profileController.js
-const { databaseConfig } = require('../../../config/config');
-const sql = require('mssql');
+const { poolPromise } = require('../../../config/config');const sql = require('mssql');
 
 // Controller function for fetching user profile
 async function getProfile(req, res) {
@@ -19,7 +18,7 @@ async function getProfile(req, res) {
         console.log('User ID:', UserId);
 
         // Connect to the database
-        const pool = await sql.connect(databaseConfig);
+        const pool = await poolPromise;
 console.log('Connected to the database');
 
 // Execute SQL query to fetch user profile

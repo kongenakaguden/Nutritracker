@@ -1,33 +1,14 @@
 const express = require('express');
 const router = express.Router();
+const mealTrackerController = require('../../views/controllers/mealTrackerController');
 
-// Placeholder arrays for storing data (Replace this with database logic later)
-let recipes = [];
-let intakeRecords = [];
+router.post('/track-ingredient', mealTrackerController.trackIngredient);
+router.post('/track-meal', mealTrackerController.trackMeal);
+router.get('/meals', mealTrackerController.getUserMeals);
+router.get('/intake-records', mealTrackerController.getIntakeRecords);
 
-// Route to add a new intake record
-router.post('/track-meal', (req, res) => {
-  const newRecord = req.body;
-  newRecord.id = intakeRecords.length + 1; // Temporary ID generation
-  intakeRecords.push(newRecord);
-  res.json(newRecord);
-});
 
-// Route to delete a record
-router.delete('/delete-record/:recordId', (req, res) => {
-  const recordId = parseInt(req.params.recordId);
-  intakeRecords = intakeRecords.filter(record => record.id !== recordId);
-  res.sendStatus(200);
-});
-
-// Route to get all recipes
-router.get('/recipes', (req, res) => {
-  res.json(recipes);
-});
-
-// Route to get all intake records
-router.get('/intake-records', (req, res) => {
-  res.json(intakeRecords);
-});
+//router.delete('/delete-record/:recordId', mealTrackerController.deleteRecord);//
+//router.put('/update-record/:recordId', mealTrackerController.updateRecord);//
 
 module.exports = router;

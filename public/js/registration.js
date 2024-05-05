@@ -36,7 +36,7 @@ document.addEventListener('DOMContentLoaded', function() {
             console.log('User registered successfully:', data);
             alert('User registered successfully');
             setTimeout(() => {
-                window.location.href = '/login.html';
+                window.location.href = '/login';
             }, 500);
         })
         .catch(error => {

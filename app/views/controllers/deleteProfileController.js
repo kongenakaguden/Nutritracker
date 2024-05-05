@@ -9,7 +9,7 @@ const deleteProfile = async (req, res) => {
 
   try {
     // Connect to the database
-    let pool = await sql.connect(databaseConfig);
+    const pool = await poolPromise;
 
     // Create a new SQL request
     let request = new sql.Request(pool);
