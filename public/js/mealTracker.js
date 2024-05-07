@@ -52,46 +52,53 @@ function fetchAndPopulateMeals() {
 }
 
 function setupMealTracking() {
-  const trackMealForm = document.getElementById("trackMealForm");
-  trackMealForm.addEventListener("submit", function (event) {
-      event.preventDefault();
+    const trackMealForm = document.getElementById("trackMealForm");
+    trackMealForm.addEventListener("submit", function (event) {
+        event.preventDefault();
+  
+        navigator.geolocation.getCurrentPosition(function (position) {
+            // Successfully retrieved the position
+            const { latitude, longitude } = position.coords;
+            const location = `${latitude}, ${longitude}`; // Format location as a string
+  
+            const mealDropdown = document.getElementById('meal-dropdown');
+            const mealId = mealDropdown.options[mealDropdown.selectedIndex].value;
+            const weight = document.getElementById('mealWeight').value;
+            const datetime = new Date(document.getElementById('mealTime').value).toISOString(); // Format datetime
+  
+            const waterVolume = document.getElementById('drinkVolume').value; // Get water volume
+            const waterDatetime = new Date(document.getElementById('drinkTime').value).toISOString(); // Format water datetime
+  
+            const data = {
+                mealId,
+                weight,
+                datetime,
+                location,
+                waterVolume, // Include water volume in the data
+                waterDatetime // Include water datetime in the data
+            };
 
-      navigator.geolocation.getCurrentPosition(function (position) {
-          // Successfully retrieved the position
-          const { latitude, longitude } = position.coords;
-          const location = `${latitude}, ${longitude}`; // Format location as a string
-
-          const mealDropdown = document.getElementById('meal-dropdown');
-          const mealId = mealDropdown.options[mealDropdown.selectedIndex].value;
-          const weight = document.getElementById('mealWeight').value;
-          const datetime = document.getElementById('mealTime').value;
-
-          const data = {
-              mealId,
-              weight,
-              datetime,
-              location  // Include the location in the data sent to the server
-          };
-
-          fetch('/meal-tracker/track-meal', {
-              method: 'POST',
-              headers: { 'Content-Type': 'application/json' },
-              body: JSON.stringify(data)
-          })
-          .then(response => response.json())
-          .then(data => {
-              console.log('Meal tracked successfully:', data);
-              alert('Meal tracked successfully!');
-          })
-          .catch(error => console.error('Error:', error));
-
-      }, function (error) {
-          // Error in retrieving position
-          console.error('Error getting location:', error);
-          alert('Error getting location, please ensure you have granted location access.');
-      });
-  });
-}
+  
+            fetch('/meal-tracker/track-meal', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify(data)
+            })
+            .then(response => response.json())
+            .then(data => {
+                console.log('Meal tracked successfully:', data);
+                alert('Meal tracked successfully!');
+            })
+            .catch(error => console.error('Error:', error));
+  
+        }, function (error) {
+            // Error in retrieving position
+            console.error('Error getting location:', error);
+            alert('Error getting location, please ensure you have granted location access.');
+        });
+    });
+  }
+  
 
 function setupIngredientTracking() {
   const ingredientsListElement = document.getElementById("ingredientsList");

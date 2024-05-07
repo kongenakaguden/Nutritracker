@@ -1,9 +1,7 @@
-// routes/users/delete.js
-
 const express = require('express');
 const router = express.Router();
-const { deleteProfile } = require('../../views/controllers/deleteProfileController');
+const { deleteUser } = require('../../views/controllers/deleteProfileController');  // Adjust the path as necessary
 
-router.post('/delete', deleteProfile);
+router.post('/delete', deleteUser);
 
 module.exports = router;

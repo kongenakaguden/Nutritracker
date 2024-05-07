@@ -5,38 +5,23 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>NutriTracker, Eksamen, Viggo</title>
     <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;700&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href=/css/styles.css>
+    <link rel="stylesheet" href="/css/styles.css">
 </head>
 <body>
-   
     <%- include ('partials/header', {loggedIn: loggedIn}) %>
     <%- include('partials/navbar', { active: 'dashboard' }) %>
 
     <div id="dashboard_title">
         <h1>Dashboard</h1>
+        <!-- Toggle view -->
+        <select id="viewSelector" onchange="toggleView(this.value)">
+            <option value="hourly">Last 24 Hours</option>
+            <option value="daily">Last Month</option>
+        </select>
     </div>
-    <div class="dashboard">
-        <div class="container">
-            <div class="category-label">Meals Today</div>
-            <h2 id="mealsToday" class="dashboard-data">0</h2>
-            <p>Meals consumed today</p>
-        </div>
-        <div class="container">
-            <div class="category-label">Energy Today</div>
-            <h2 id="energyToday" class="dashboard-data">0 kcal</h2>
-            <p>Kalories consumed today</p>
-        </div>
-        <div class="container">
-            <div class="category-label">Water Today</div>
-            <h2 id="waterToday" class="dashboard-data">0 L</h2>
-            <p>Water consumed today</p>
-        </div>
-        <div class="container">
-            <div class="category-label">Protein Today</div>
-            <h2 id="proteinToday" class="dashboard-data">0 g</h2>
-            <p>Protein consumed today</p>
-        </div>
-    </div>
+
+    <!-- Container for dynamic content -->
+    <div id="dashboardContent" class="dashboard"></div>
     
     <script src="/js/dashboard.js"></script>
 </body>

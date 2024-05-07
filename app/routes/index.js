@@ -13,6 +13,7 @@ const logoutRouter = require('./users/logout');
 const profileRouter = require('./users/profile');
 const editProfileRouter = require('./users/editProfile'); // Add the route for editing profile
 const deleteRouter = require('./users/delete');
+const dailyRouter = require('./dailyRoutes/dailyRoutes');
 
 
 
@@ -27,6 +28,7 @@ router.use('/users', logoutRouter); // Mount the logout route
 router.use('/users', profileRouter);
 router.use('/users', editProfileRouter);
 router.use('/users', deleteRouter);
+router.use('/daily', dailyRouter);
 
 
 module.exports = router;

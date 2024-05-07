@@ -10,7 +10,10 @@ const app = express();
 app.use(session({
   secret: '123',
   resave: false,
-  saveUninitialized: true
+  saveUninitialized: false,  // Don't create a session until something is stored
+  cookie: {
+      maxAge: 3600000  // 1 hour (in milliseconds)
+  }
 }));
 
 // Middleware to extract user information from session
@@ -18,9 +21,10 @@ app.use(setUser);
 
 // Set loggedIn variable in res.locals based on session status
 app.use((req, res, next) => {
-  res.locals.loggedIn = req.session.loggedIn || false;
+  res.locals.loggedIn = !!req.session.user;  // More explicit check
   next();
 });
+
 
 app.use(express.static(path.join(__dirname, 'public')));
 

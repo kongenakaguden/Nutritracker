@@ -1,29 +1,100 @@
 document.addEventListener('DOMContentLoaded', function() {
-    updateNutriDashboard();
+    updateNutriDashboard('hourly');
 });
 
-function updateNutriDashboard() {
-    const todayDate = new Date().toISOString().split('T')[0];
-    let mealsToday = 0, energyToday = 0, waterToday = 0, proteinToday = 0;
+function toggleView(viewType) {
+    updateNutriDashboard(viewType);
+}
 
-    for (let i = 0; i < localStorage.length; i++) {
-        const key = localStorage.key(i);
-        if (key.startsWith('trackedMeal-')) {
-            const mealRecord = JSON.parse(localStorage.getItem(key));
-            const recordDate = new Date(mealRecord.time).toISOString().split('T')[0];
+async function updateNutriDashboard(viewType) {
+    const dashboardContent = document.getElementById('dashboardContent');
+    dashboardContent.innerHTML = ''; // Clear previous content
 
-            if (recordDate === todayDate) {
-                mealsToday += 1;
-                energyToday += mealRecord.nutrients.kcal || 0;
-                waterToday += mealRecord.drink || 0;
-                proteinToday += mealRecord.nutrients.protein || 0;
-            }
-        }
+    if (viewType === 'hourly') {
+        await renderHourlyView(dashboardContent);
+    } else if (viewType === 'daily') {
+        await renderDailyView(dashboardContent);
     }
+}
 
-    // Opdater dashboard elementer.
-    document.getElementById('mealsToday').textContent = mealsToday;
-    document.getElementById('energyToday').textContent = `${energyToday.toFixed(0)} kcal`;
-    document.getElementById('waterToday').textContent = `${waterToday.toFixed(1)} L`;
-    document.getElementById('proteinToday').textContent = `${proteinToday.toFixed(0)} g`;
+async function renderHourlyView(container) {
+    const hourlyData = await getHourlyNutritionData();
+    console.log('Hourly data:', hourlyData); // Log the received data
+
+    const table = document.createElement('table');
+    table.innerHTML = `
+        <tr>
+            <th>Hour</th>
+            <th>Energy (kcal)</th>
+            <th>Water (mL)</th>
+            <th>Calories Burned (kcal)</th>
+        </tr>
+    `;
+    hourlyData.forEach(data => {
+        const row = document.createElement('tr');
+        row.innerHTML = `
+            <td>${data.Hour}</td>
+            <td>${data.Energy}</td>
+            <td>${data.Water || 'N/A'}</td>
+            <td>${data.CaloriesBurned || 'N/A'}</td>
+        `;
+        table.appendChild(row);
+    });
+    container.appendChild(table);
+}
+
+
+async function renderDailyView(container) {
+    const dailyData = await getDailyNutritionData();
+    console.log('Daily data:', dailyData); // Log the received data
+
+    const table = document.createElement('table');
+    table.innerHTML = `
+        <tr>
+            <th>Date</th>
+            <th>Total Energy (kcal)</th>
+            <th>Total Water (L)</th>
+            <th>Total Calories Burned (kcal)</th>
+            <th>Caloric Balance</th>
+        </tr>
+    `;
+    dailyData.forEach(data => {
+        const energyIntake = data.TotalEnergy;
+        const caloriesBurned = data.TotalCaloriesBurned || 0; // Default to 0 if undefined
+        const caloricBalance = energyIntake - caloriesBurned;
+        const caloricStatus = caloricBalance > 0 ? 'Surplus' : 'Deficit';
+
+        const row = document.createElement('tr');
+        row.innerHTML = `
+            <td>${new Date(data.Date).toLocaleDateString()}</td>
+            <td>${energyIntake}</td>
+            <td>${data.TotalWater}</td>
+            <td>${caloriesBurned}</td>
+            <td>${caloricBalance} kcal (${caloricStatus})</td>
+        `;
+        table.appendChild(row);
+    });
+    container.appendChild(table);
+}
+
+
+
+
+// Placeholder functions to represent data fetching or computation
+async function getHourlyNutritionData() {
+    const response = await fetch('/daily/hourly');
+    if (!response.ok) {
+        throw new Error(`HTTP error! status: ${response.status}`);
+    }
+    const data = await response.json();
+    return data;
+}
+
+async function getDailyNutritionData() {
+    const response = await fetch('/daily/daily');
+    if (!response.ok) {
+        throw new Error(`HTTP error! status: ${response.status}`);
+    }
+    const data = await response.json();
+    return data;
 }
