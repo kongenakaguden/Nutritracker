@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Create Meal</title>
+    <link rel="stylesheet" href="/css/styles.css">
+</head>
+<body>
+    <%- include ('partials/header', { loggedIn: loggedIn }) %>
+    <%- include('partials/navbar', { active: 'mealCreator' }) %>
+    <div class="meal-creation-container">
+        <h1>Create a Meal</h1>
+        <form id="mealCreationForm">
+            <div class="form-row">
+                <label for="mealName">Meal Name:</label>
+                <input type="text" id="mealName" name="mealName" required>
+            </div>
+
+            <div class="ingredient-list">
+                <input type="text" id="search-box" placeholder="Search Ingredients...">
+                <button id="search-button">Search</button>
+                <h2>Ingredients:</h2>
+                <ul id="ingredientsList"></ul>
+                <button id="refresh">Refresh Ingredients</button>"
+                <h2>Selected ingredients for this meal:</h2>
+                <ul id="selected-ingredients"></ul>
+            </div>
+
+            <div class="form-row submit-row">
+                <button type="button" id="saveMealButton">Save Meal</button>
+            </div>
+        </form>
+    </div>
+    <script src="/js/newMeal.js"></script>
+</body>
+</html>

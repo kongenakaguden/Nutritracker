@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>NutriTracker, Eksamen, Viggo</title>
+    <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="/css/styles.css">
+</head>
+<body>
+    <%- include ('partials/header', {loggedIn: loggedIn}) %>
+    <%- include('partials/navbar', { active: 'dashboard' }) %>
+
+    <div id="dashboard_title">
+        <h1>Dashboard</h1>
+        <!-- Toggle view -->
+        <select id="viewSelector" onchange="toggleView(this.value)">
+            <option value="hourly">Last 24 Hours</option>
+            <option value="daily">Last Month</option>
+        </select>
+    </div>
+
+    <!-- Container for dynamic content -->
+    <div id="dashboardContent" class="dashboard"></div>
+    
+    <script src="/js/dashboard.js"></script>
+</body>
+</html>

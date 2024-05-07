@@ -1,0 +1,62 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Meal Tracker</title>
+    <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="/css/styles.css">
+</head>
+<body>
+
+    <%- include('partials/header', {loggedIn: loggedIn}) %>
+
+    <%- include('partials/navbar', { active: 'meal_tracker' }) %>
+
+
+    <div class="tracker-container">
+        <h2>Meal Tracker</h2>
+        <form id="trackMealForm">
+            <label for="recipeSelect">Select Recipe:</label>
+            <select id="meal-dropdown">
+            
+              </select>
+
+            <label for="mealWeight">Weight of Meal (grams):</label>
+            <input type="number" id="mealWeight" name="mealWeight" required>
+
+            <label for="mealTime">Time of Meal:</label>
+            <input type="datetime-local" id="mealTime" name="mealTime" value="" required>
+
+            <label for="drinkVolume">Volume of Drink (liters):</label>
+            <input type="number" id="drinkVolume" name="drinkVolume" step="0.1" required>
+
+            <label for="drinkTime">Time of Drink:</label>
+            <input type="datetime-local" id="drinkTime" name="drinkTime" value="" required>
+
+            <button type="submit">Register Intake</button>
+        </form>
+
+        <input type="text" id="search-box" placeholder="Search Ingredients...">
+        <button id="search-button">Search</button>
+        <ul id="ingredientsList"></ul>
+        
+
+ <!-- List of ingredients populated from the API -->
+        </div>
+           
+
+        <div class="intake-records">
+            <h3>Your Intake Records</h3>
+            <div class="record">
+                <span>Chicken Salad - 250g at 12:30, 500 kcal</span>
+                <button class="edit">Edit</button>
+                <button class="delete">Delete</button>
+            </div>
+        </div>
+    </div>
+
+    <script src="/js/mealTracker.js"></script>
+</body>
+</html>

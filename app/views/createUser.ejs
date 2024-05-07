@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Create Profile</title>
+    <link rel="stylesheet" href="/css/styles.css">
+</head>
+<body>
+    <%- include('partials/header', {loggedIn: loggedIn}) %>
+
+    <%- include('partials/navbar', { active: 'createProfile' }) %>
+    <div class="container">
+        <h2>Create Profile</h2>
+        <form id="profileForm">
+            <label for="username">Username:</label><br>
+            <input type="text" id="username" name="username" required><br>
+            <label for="email">Email:</label><br>
+            <input type="email" id="email" name="email" required><br>
+            <label for="password">Password:</label><br>
+            <input type="password" id="password" name="password" required><br>
+            <label for="weight">Weight (kg):</label><br>
+            <input type="number" id="weight" name="weight" min="0" required><br>
+            <label for="age">Age:</label><br>
+            <input type="number" id="age" name="age" min="0" required><br>
+            <label for="gender">Gender:</label><br>
+            <select id="gender" name="gender" required>
+                <option value="">Select</option>
+                <option value="Male">Male</option>
+                <option value="Female">Female</option>
+                <option value="Other">Other</option>
+            </select><br><br>
+            <input type="submit" value="Create Profile">
+        </form>
+        <p id="message"></p>
+    </div>
+    
+    <script src="/js/create_profile.js"></script>
+</body>
+</html>
