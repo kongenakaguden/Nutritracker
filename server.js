@@ -6,13 +6,12 @@ const setUser = require('./app/views/auth/setUser'); // Update the path to the s
 
 const app = express();
 
-// Configure session middleware
 app.use(session({
-  secret: '123',
-  resave: false,
-  saveUninitialized: false,  // Don't create a session until something is stored
+  secret: '123',  // En hemmelighed bruges til at signere session-cookie, hvilket øger sikkerheden
+  resave: false,  // Sikrer at sessionen ikke gemmes igen, hvis der ikke er lavet ændringer
+  saveUninitialized: false,  // Sikrer at ingen session bliver gemt, før den er initialiseret
   cookie: {
-      maxAge: 3600000  // 1 hour (in milliseconds)
+      maxAge: 3600000  // Angiver en tidsgrænse på 1 time for sessionens gyldighed
   }
 }));
 
