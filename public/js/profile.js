@@ -1,80 +1,92 @@
+// Når HTML-dokumentet er fuldt indlæst, kør denne kode
 document.addEventListener('DOMContentLoaded', function() {
     console.log('DOM content loaded');
 
-    // Function to fetch user profile information
+    // Funktion til at hente brugerens profilinformation
     async function fetchProfile() {
         console.log('Fetching user profile...');
         try {
+            // Send en GET-anmodning til serveren for at hente brugerprofilen
             const response = await fetch('/users/profile', {
                 method: 'GET',
-                credentials: 'same-origin' // Include credentials in the request
+                credentials: 'same-origin' // Medtag sessionsoplysninger i anmodningen
             });
+
+            // Hvis svaret ikke er OK, kast en fejl
             if (!response.ok) {
                 throw new Error('Failed to fetch user profile');
             }
+
+            // Konverter svaret til JSON og log profildata
             const profileData = await response.json();
             console.log('User profile data:', profileData);
+
+            // Opdater UI med profildataene
             updateProfileUI(profileData);
         } catch (error) {
-
+            // Log fejlen, hvis anmodningen mislykkes
             console.error('Error fetching user profile:', error);
         }
     }
 
-// Function to update the UI with profile data
-function updateProfileUI(profileData) {
-    console.log('Updating profile UI with profile data:', profileData);
+    // Funktion til at opdatere brugergrænsefladen med profildata
+    function updateProfileUI(profileData) {
+        console.log('Updating profile UI with profile data:', profileData);
 
-    // Extract user profile data from profileData object
-    const userProfile = profileData.profile;
+        // Hent profildata fra JSON-objektet
+        const userProfile = profileData.profile;
 
-    // Update profileInfo div with userProfile data
-    const profileInfoDiv = document.getElementById('profileInfo');
+        // Find profildiv'en og ryd eksisterende indhold
+        const profileInfoDiv = document.getElementById('profileInfo');
+        profileInfoDiv.innerHTML = '';
 
-    // Clear any existing content
-    profileInfoDiv.innerHTML = '';
+        // Gennemgå hver egenskab i userProfile og skab en strengrepræsentation
+        for (const key in userProfile) {
+            if (Object.hasOwnProperty.call(userProfile, key)) {
+                const value = userProfile[key];
 
-    // Iterate through each property in userProfile and construct a string representation
-    for (const key in userProfile) {
-        if (Object.hasOwnProperty.call(userProfile, key)) {
-            const value = userProfile[key];
-            // Construct a string representation of the property and its value
-            const propertyString = `${key}: ${value}`;
-            // Create a new paragraph element
-            const paragraph = document.createElement('p');
-            // Set the text content of the paragraph to the constructed string
-            paragraph.textContent = propertyString;
-            // Append the paragraph to the profileInfo div
-            profileInfoDiv.appendChild(paragraph);
+                // Opret en strengrepræsentation af egenskaben og dens værdi
+                const propertyString = `${key}: ${value}`;
 
-            // Log the property and its value
-            console.log(`Added property '${key}' with value '${value}' to profile UI`);
+                // Opret et nyt paragraf-element og sæt dets tekst til egenskabsstrengen
+                const paragraph = document.createElement('p');
+                paragraph.textContent = propertyString;
+
+                // Tilføj paragraf-elementet til profildiv'en
+                profileInfoDiv.appendChild(paragraph);
+
+                // Log egenskaben og dens værdi
+                console.log(`Added property '${key}' with value '${value}' to profile UI`);
+            }
         }
+
+        // Tilføj en event listener til logout-knappen
+        document.getElementById('logout-button').addEventListener('click', async function() {
+            try {
+                // Send en POST-anmodning til serveren for at logge brugeren ud
+                const response = await fetch('/users/logout', {
+                    method: 'POST',
+                    credentials: 'same-origin'
+                });
+
+                // Hvis svaret ikke er OK, kast en fejl
+                if (!response.ok) {
+                    throw new Error('Failed to log out');
+                }
+
+                // Log succesmeddelelsen og omdiriger til login-siden
+                console.log('Logged out successfully');
+                window.location.href = '/login';
+            } catch (error) {
+                // Log fejlen, hvis logout mislykkes
+                console.error('Error logging out:', error);
+            }
+        });
+
+        console.log('Profile UI update completed');
     }
 
-    document.getElementById('logout-button').addEventListener('click', async function() {
-        try {
-            // Send POST request to logout endpoint
-            const response = await fetch('/users/logout', {
-                method: 'POST',
-                credentials: 'same-origin'
-            });
-
-            if (!response.ok) {
-                throw new Error('Failed to log out');
-            }
-
-            // Handle successful response
-            console.log('Logged out successfully');
-            window.location.href = '/login'; 
-        } catch (error) {
-            console.error('Error logging out:', error);
-        }
-    });
-    console.log('Profile UI update completed');
-}
-
-    // Initialize profile page
+    // Initialiser profil-siden ved at hente profildata
     console.log('Initializing profile page...');
     fetchProfile();
 });
