@@ -1,15 +1,20 @@
+// Når hele HTML-dokumentet er indlæst, opdateres dashboardet med 'hourly'-visningen
 document.addEventListener('DOMContentLoaded', function() {
     updateNutriDashboard('hourly');
 });
 
+// Skift mellem 'hourly' og 'daily' visning
 function toggleView(viewType) {
     updateNutriDashboard(viewType);
 }
 
+// Opdater dashboardet baseret på valgte visningstype
 async function updateNutriDashboard(viewType) {
+    // Find dashboard-elementet og ryd tidligere indhold
     const dashboardContent = document.getElementById('dashboardContent');
-    dashboardContent.innerHTML = ''; // Clear previous content
+    dashboardContent.innerHTML = ''; // Ryd tidligere indhold
 
+    // Opdater indholdet baseret på den valgte visningstype
     if (viewType === 'hourly') {
         await renderHourlyView(dashboardContent);
     } else if (viewType === 'daily') {
@@ -17,10 +22,13 @@ async function updateNutriDashboard(viewType) {
     }
 }
 
+// Render 'hourly'-visningen med data fra timebasis
 async function renderHourlyView(container) {
+    // Hent timebaseret ernæringsdata
     const hourlyData = await getHourlyNutritionData();
-    console.log('Hourly data:', hourlyData); // Log the received data
+    console.log('Hourly data:', hourlyData); // Log de modtagne data
 
+    // Opret en tabel med kolonneoverskrifter for 'hourly'-data
     const table = document.createElement('table');
     table.innerHTML = `
         <tr>
@@ -30,6 +38,7 @@ async function renderHourlyView(container) {
             <th>Calories Burned (kcal)</th>
         </tr>
     `;
+    // Gennemgå time-dataene og tilføj en række for hver time
     hourlyData.forEach(data => {
         const row = document.createElement('tr');
         row.innerHTML = `
@@ -40,14 +49,17 @@ async function renderHourlyView(container) {
         `;
         table.appendChild(row);
     });
+    // Tilføj tabellen til dashboardet
     container.appendChild(table);
 }
 
-
+// Render 'daily'-visningen med data fra dagsbasis
 async function renderDailyView(container) {
+    // Hent daglig ernæringsdata
     const dailyData = await getDailyNutritionData();
-    console.log('Daily data:', dailyData); // Log the received data
+    console.log('Daily data:', dailyData); // Log de modtagne data
 
+    // Opret en tabel med kolonneoverskrifter for 'daily'-data
     const table = document.createElement('table');
     table.innerHTML = `
         <tr>
@@ -58,9 +70,10 @@ async function renderDailyView(container) {
             <th>Caloric Balance</th>
         </tr>
     `;
+    // Gennemgå daglige data og tilføj en række for hver dag
     dailyData.forEach(data => {
         const energyIntake = data.TotalEnergy;
-        const caloriesBurned = data.TotalCaloriesBurned || 0; // Default to 0 if undefined
+        const caloriesBurned = data.TotalCaloriesBurned || 0; // Standard til 0, hvis ikke defineret
         const caloricBalance = energyIntake - caloriesBurned;
         const caloricStatus = caloricBalance > 0 ? 'Surplus' : 'Deficit';
 
@@ -74,13 +87,11 @@ async function renderDailyView(container) {
         `;
         table.appendChild(row);
     });
+    // Tilføj tabellen til dashboardet
     container.appendChild(table);
 }
 
-
-
-
-// Placeholder functions to represent data fetching or computation
+// Funktion til at hente timebaserede ernæringsdata via en API-anmodning
 async function getHourlyNutritionData() {
     const response = await fetch('/daily/hourly');
     if (!response.ok) {
@@ -90,6 +101,7 @@ async function getHourlyNutritionData() {
     return data;
 }
 
+// Funktion til at hente daglige ernæringsdata via en API-anmodning
 async function getDailyNutritionData() {
     const response = await fetch('/daily/daily');
     if (!response.ok) {

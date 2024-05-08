@@ -1,10 +1,14 @@
+// Når HTML-dokumentet er fuldt indlæst, kør denne kode
 document.addEventListener('DOMContentLoaded', function() {
+    // Find registreringsformularen ved hjælp af dens id
     const registrationForm = document.getElementById('registrationForm');
 
+    // Tilføj en event listener til formularens 'submit'-begivenhed
     registrationForm.addEventListener('submit', function(event) {
+        // Forhindre standardformularindsendelsen
         event.preventDefault();
 
-        // Collect user input
+        // Saml brugerens input fra formularen og opret et objekt
         const userData = {
             username: registrationForm.username.value,
             email: registrationForm.email.value,
@@ -14,9 +18,10 @@ document.addEventListener('DOMContentLoaded', function() {
             gender: registrationForm.gender.value
         };
 
-        console.log('User data:', userData); // Log user data
+        // Log brugerdata til konsollen
+        console.log('User data:', userData);
 
-        // Send user data to the server for registration
+        // Send brugerdata til serveren via en POST-anmodning for at registrere brugeren
         fetch('/users/create', {
             method: 'POST',
             headers: {
@@ -25,7 +30,10 @@ document.addEventListener('DOMContentLoaded', function() {
             body: JSON.stringify(userData)
         })
         .then(response => {
-            console.log('Response:', response); // Log response
+            // Log serverens svar til konsollen
+            console.log('Response:', response);
+
+            // Kontroller om svaret er OK, og konverter det til JSON
             if (response.ok) {
                 return response.json();
             } else {
@@ -33,15 +41,19 @@ document.addEventListener('DOMContentLoaded', function() {
             }
         })
         .then(data => {
+            // Log en succesmeddelelse, hvis brugeren registreres korrekt
             console.log('User registered successfully:', data);
             alert('User registered successfully');
+
+            // Omdirigér brugeren til login-siden efter en kort pause
             setTimeout(() => {
                 window.location.href = '/login';
             }, 500);
         })
         .catch(error => {
+            // Log en fejlmeddelelse, hvis registreringen mislykkes
             console.error('Error registering user:', error);
-            // Handle registration error (e.g., display error message to user)
+            // Håndter eventuelle fejl ved registreringen, fx ved at vise en fejlmeddelelse
         });
     });
 });
