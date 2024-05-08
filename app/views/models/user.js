@@ -16,14 +16,15 @@ class User {
     async createUser(userData) {
         const { username, email, password, weight, age, gender } = userData;
         const pool = await poolPromise;
-
+        // Tjek om brugeren allerede findes i databasen
         if (await this.checkUserExists(email)) {
             throw new Error('User already exists');
         }
-
+        // Hash brugerens password
         const hashedPassword = await bcrypt.hash(password, 10);
+        // Beregn brugerens Basal Metabolic Rate (BMR)
         const bmr = this.calculateBMR(weight, age, gender);
-
+        // Indsæt den nye bruger i databasen med de indsamlede og beregnede oplysninger
         await pool.request()
             .input('username', sql.NVarChar(255), username)
             .input('email', sql.NVarChar(255), email)
@@ -55,14 +56,14 @@ class User {
 
     async updateProfile(userId, profileData) {
         const { username, email, weight, age, gender } = profileData;
-        const pool = await poolPromise;
-        const result = await pool.request()
-            .input('username', sql.NVarChar(255), username)
-            .input('email', sql.NVarChar(255), email)
-            .input('weight', sql.Decimal(10, 2), weight)
-            .input('age', sql.Int, age)
-            .input('gender', sql.NVarChar(50), gender)
-            .input('userId', sql.Int, userId)
+        const pool = await poolPromise; // Venter på en databaseforbindelsespool
+        const result = await pool.request() // Starter en ny databaseforespørgsel
+            .input('username', sql.NVarChar(255), username) // Angiver brugerens nye brugernavn
+            .input('email', sql.NVarChar(255), email) // Angiver brugerens nye email
+            .input('weight', sql.Decimal(10, 2), weight) // Angiver brugerens nye vægt
+            .input('age', sql.Int, age) // Angiver brugerens nye alder
+            .input('gender', sql.NVarChar(50), gender) // Angiver brugerens nye køn
+            .input('userId', sql.Int, userId) // Specificerer hvilken brugerprofil der skal opdateres
             .query(`
                 UPDATE Nutri.Users
                 SET username = @username,
@@ -71,9 +72,10 @@ class User {
                     age = @age,
                     gender = @gender
                 WHERE UserId = @userId
-            `);
-        return result.rowsAffected[0]; // This will return the number of affected rows
+            `); // Udfører opdateringen af brugerprofilen i databasen
+        return result.rowsAffected[0]; // Returnerer antallet af rækker, der er påvirket af opdateringen
     }
+    
 
     async verifyUserCredentials(username, password) {
         const pool = await poolPromise;
@@ -91,12 +93,13 @@ class User {
     }
 
     async deleteUser(userId) {
-        const pool = await poolPromise;
-        const result = await pool.request()
-            .input('userId', sql.Int, userId)
-            .query('DELETE FROM Nutri.Users WHERE userId = @userId');
-        return result.rowsAffected[0]; // This will return the number of rows affected
+        const pool = await poolPromise; // Venter på en database forbindelsespool
+        const result = await pool.request() // Starter en ny database forespørgsel
+            .input('userId', sql.Int, userId) // Angiver inputparameter 'userId' med datatypen Integer
+            .query('DELETE FROM Nutri.Users WHERE userId = @userId'); // Udfører en SQL sletning baseret på brugerens ID
+        return result.rowsAffected[0]; // Returnerer antallet af rækker, der er påvirket af sletningen
     }
+    
 
     async getHourlyNutrition(userId) {
         const pool = await poolPromise;
