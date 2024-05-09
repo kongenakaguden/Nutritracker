@@ -141,17 +141,20 @@ class User {
         const pool = await poolPromise;
         // Definerer en SQL-forespørgsel for at hente ernæringsdata time for time
         const query = `
-            SELECT 
-                DATEPART(HOUR, ir.datetime) as Hour,
-                SUM(ir.TotalCalories) as Energy,
-                SUM(ir.waterVolume) as Water,
-                SUM(ar.caloriesBurned) + (u.BMR / 24) as CaloriesBurned
-            FROM Nutri.intake_records ir
-            INNER JOIN Nutri.Users u ON u.UserId = ir.userId
-            LEFT JOIN Nutri.activity_records ar ON ar.userId = ir.userId AND DATEPART(HOUR, ar.recordedAt) = DATEPART(HOUR, ir.datetime)
-            WHERE ir.userId = @userId AND ir.datetime >= DATEADD(HOUR, -24, GETDATE())
-            GROUP BY DATEPART(HOUR, ir.datetime), u.BMR;
-        `;
+        SELECT 
+            DATEPART(HOUR, ir.datetime) AS Hour,
+            SUM(ir.TotalCalories) AS Energy,
+            SUM(ir.waterVolume) AS Water,
+            ISNULL(SUM(ar.caloriesBurned), 0) + (u.BMR / 24) AS CaloriesBurned
+        FROM Nutri.intake_records ir
+        INNER JOIN Nutri.Users u ON u.UserId = ir.userId
+        LEFT JOIN Nutri.activity_records ar ON ar.userId = ir.userId
+            AND DATEPART(HOUR, ar.recordedAt) = DATEPART(HOUR, ir.datetime)
+        WHERE ir.userId = @userId
+            AND ir.datetime >= DATEADD(HOUR, -24, GETDATE())
+        GROUP BY DATEPART(HOUR,  ir.datetime), u.BMR;
+    `;
+
         // Udfør forespørgslen med bruger-ID som input
         const result = await pool.request()
             .input('userId', sql.Int, userId)
