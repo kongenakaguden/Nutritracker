@@ -34,7 +34,9 @@ app.set('view engine', 'ejs');
 const viewsPath = path.join(__dirname, './app', 'views');
 
 app.set('views', viewsPath);
+const routes = require('./app/routes');
 
+app.use('/', routes);
 // Serve static files from the 'views' directory
 app.get('/', (req, res) => {
   res.render('index', { loggedIn: req.session.loggedIn });
@@ -84,10 +86,9 @@ app.get('/edit-profile', (req, res) => {
   res.render('editProfile', { loggedIn: req.session.loggedIn });
 });
 
-// Define routes
-const routes = require('./app/routes');
 
-app.use('/', routes);
+// Define routes
+
 
 // Start the server
 const PORT = process.env.PORT || 3000;

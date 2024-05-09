@@ -23,12 +23,12 @@ router.get('/meals', mealTrackerController.getUserMeals);
 // Når en GET-anmodning sendes til denne rute, vil 'getIntakeRecords'-metoden i 'mealTrackerController' returnere brugerens indtagelsesposter
 router.get('/intake-records', mealTrackerController.getIntakeRecords);
 
-// Deaktiverede ruter til sletning og opdatering af poster, markeret som kommentarer
-// Ruten til at slette en bestemt post baseret på dens 'recordId'
-// router.delete('/delete-record/:recordId', mealTrackerController.deleteRecord);
+// Ruten til at slette en bestemt post baseret på dens 'id'
+router.delete('/delete/:id', mealTrackerController.deleteRecord);
 
-// Ruten til at opdatere en bestemt post baseret på dens 'recordId'
-// router.put('/update-record/:recordId', mealTrackerController.updateRecord);
+// Ruten til at opdatere en bestemt post baseret på dens 'id'
+router.get('/edit-record/:id', mealTrackerController.getUpdateRecordPage);
+router.put('/update-record/:id', mealTrackerController.updateIntakeRecord);
 
 // Eksportér routeren, så den kan bruges i andre dele af applikationen
 module.exports = router;

@@ -278,30 +278,74 @@ document.addEventListener("DOMContentLoaded", function () {
   function displayIntakeRecords(records) {
     const recordsContainer = document.querySelector('.intake-records');
     recordsContainer.innerHTML = '<h3>Your Intake Records</h3>'; // Ryd eksisterende indhold
-  
+
     records.forEach(record => {
         // Opret et div-element for hver post
         const recordDiv = document.createElement('div');
         recordDiv.className = 'record';
-  
+        recordDiv.setAttribute('data-id', record.id); // Tilføj data-id attribut med record ID
+
         // Tilføj information om posten
         const recordSpan = document.createElement('span');
         recordSpan.textContent = `${record.mealName} - ${record.weight}g at ${new Date(record.datetime).toLocaleString()}, ${record.TotalCalories} kcal`;
-  
+
         // Tilføj redigerings- og sletknapper
         const editButton = document.createElement('button');
         editButton.textContent = 'Edit';
         editButton.className = 'edit';
-  
+
         const deleteButton = document.createElement('button');
         deleteButton.textContent = 'Delete';
         deleteButton.className = 'delete';
-  
+
         recordDiv.appendChild(recordSpan);
         recordDiv.appendChild(editButton);
         recordDiv.appendChild(deleteButton);
-  
+
         recordsContainer.appendChild(recordDiv);
     });
-  }
+
+    // Efter records er tilføjet, tilknyt event handlers
+    attachEventHandlers();
+}
+
+function attachEventHandlers() {
+    document.querySelectorAll('.delete').forEach(button => {
+        button.removeEventListener('click', handleDelete); // Fjern tidligere event handler for at undgå dobbeltbinding
+        button.addEventListener('click', handleDelete); // Tilføj event handler
+    });
+
+    document.querySelectorAll('.edit').forEach(button => {
+        button.removeEventListener('click', handleEdit); // Fjern tidligere event handler
+        button.addEventListener('click', handleEdit); // Tilføj event handler
+    });
+}
+
+function handleDelete(event) {
+    const recordDiv = event.target.closest('.record');
+    const recordId = recordDiv.getAttribute('data-id');
+    console.log('Deleting record with ID:', recordId); // Log the ID being deleted
+
+    fetch(`/meal-tracker/delete/${recordId}`, {
+        method: 'DELETE'
+    })
+    .then(response => {
+        if (response.ok) {
+            console.log('Record deleted successfully');
+            recordDiv.remove();
+        } else {
+            throw new Error('Failed to delete the record');
+        }
+    })
+    .catch(error => console.error('Error:', error));
+}
+
+function handleEdit(event) {
+    const recordDiv = event.target.parentNode;
+    const recordId = recordDiv.getAttribute('data-id');
+    window.location.href = `/meal-tracker/edit-record/${recordId}`; // Naviger til redigeringssiden
+}
+
+
+
   

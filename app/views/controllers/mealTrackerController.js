@@ -78,12 +78,12 @@ exports.trackIngredient = async (req, res) => {
   }
 
   // Ekstrahér ingrediensdata fra anmodningens body
-  const { ingredient, weight, nutrients, datetime, location, totalCalories } = req.body;
+  const { ingredient, weight, datetime, location, totalCalories } = req.body;
 
   try {
     // Spor ingrediensen ved hjælp af IntakeRecord-klassen
     const intakeRecord = new IntakeRecord();
-    await intakeRecord.trackIngredient(userId, ingredient, weight, nutrients, datetime, location, totalCalories);
+    await intakeRecord.trackIngredient(userId, ingredient, weight, datetime, location, totalCalories);
     console.log('Ingredient tracked successfully');
     // Returnér en succesmeddelelse
     res.status(200).send({ message: 'Ingredient tracked successfully' });
@@ -91,5 +91,66 @@ exports.trackIngredient = async (req, res) => {
     // Log fejlen og returnér en 500-fejl
     console.error('Error tracking ingredient:', err);
     res.status(500).send({ message: 'Error tracking ingredient', error: err });
+  }
+};
+
+exports.deleteRecord = async (req, res) => {
+  const recordId = req.params.id;
+  console.log('Attempting to delete record with ID:', recordId); // Check the received ID
+
+  try {
+      const deleted = await new IntakeRecord().deleteRecord(recordId);
+      if (deleted) {
+          console.log('Record deleted successfully');
+          res.status(200).json({ message: 'Record deleted successfully' });
+      } else {
+          console.log('No record found with ID:', recordId);
+          res.status(404).json({ message: 'Record not found' });
+      }
+  } catch (err) {
+      console.error('Error deleting record:', err);
+      res.status(500).json({ message: 'Error deleting record', error: err });
+  }
+};
+
+// Assuming this is in your Express controller file
+exports.updateIntakeRecord = async (req, res) => {
+  const recordId = req.params.id;
+  const { weight, datetime } = req.body;
+
+  if (!recordId) {
+      return res.status(400).json({ message: "Record ID is required" });
+  }
+
+  try {
+      const intakeRecord = new IntakeRecord();
+      const result = await intakeRecord.updateRecord(recordId, { weight, datetime });
+      if (result) {
+          res.status(200).json({ message: "Record updated successfully" });
+      } else {
+          res.status(404).json({ message: "Record not found" });
+      }
+  } catch (err) {
+      res.status(500).json({ message: "Error updating record", error: err.toString() });
+  }
+};
+
+exports.getUpdateRecordPage = async (req, res) => {
+  const recordId = req.params.id;
+  try {
+      const intakeRecord = new IntakeRecord();
+      const record = await intakeRecord.getRecordById(recordId);
+      if (record) {
+          res.render('editIntakeRecord', {
+              loggedIn: req.session.loggedIn,
+              record: record,
+              active: 'meal_tracker'
+          });
+      } else {
+          res.status(404).send('Record not found');
+      }
+  } catch (error) {
+      console.error('Error fetching record:', error);
+      res.status(500).send('Internal Server Error');
   }
 };
