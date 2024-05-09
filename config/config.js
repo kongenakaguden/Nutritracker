@@ -1,11 +1,12 @@
 const sql = require('mssql');
+require('dotenv').config();
 
 // Correct config object setup
 const config = {
-  server: 'jatakserver.database.windows.net',  // Ensure the server name is correct
-  user: 'Viggo@jatakserver',  // User format generally 'username@servername'
-  password: 'Studiegruppe123.',
-  database: 'NutriTracker',
+  server: process.env.DB_SERVER, 
+  user: process.env.DB_USER, 
+  password: process.env.DB_PASS,
+  database: process.env.DB_NAME,
   port: 1433,
   options: {
     encrypt: true,  // Necessary for Azure SQL Database

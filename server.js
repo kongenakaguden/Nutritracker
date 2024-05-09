@@ -4,6 +4,7 @@ const path = require('path');
 const { poolPromise } = require('./config/config');
 const setUser = require('./app/views/auth/setUser'); // Update the path to the setUser middleware
 
+
 const app = express();
 
 app.use(session({
