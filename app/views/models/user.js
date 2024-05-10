@@ -45,7 +45,12 @@ class User {
 
     // Beregner Basal Metabolic Rate (BMR) baseret på vægt, alder og køn
     calculateBMR(weight, age, gender) {
+        if (!gender) {
+            throw new Error('Gender is required to calculate BMR');
+        }
+    
         const normalizedGender = gender.toLowerCase();
+    
         // Beregner BMR for mænd
         if (normalizedGender === 'male') {
             return 88.362 + (13.397 * weight) + (4.799 * 180) - (5.677 * age);
