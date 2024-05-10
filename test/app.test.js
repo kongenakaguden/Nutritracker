@@ -8,22 +8,22 @@ describe('User Route - createUser', function() {
 
     // Before each test, store the original function and set up the necessary mock
     beforeEach(() => {
-        originalCheckUserExists = User.checkUserExists; // Store the original function
+        originalCheckUserExists = User.prototype.checkUserExists; // Store the original function
     });
 
     // After each test, restore the original function to ensure no test interference
     afterEach(() => {
-        User.checkUserExists = originalCheckUserExists; // Restore the original function
+        User.prototype.checkUserExists = originalCheckUserExists; // Restore the original function
     });
 
     it('should create a user successfully', async function() {
         // Mock checkUserExists to always return false for this test
-        User.checkUserExists = async () => false;
+        User.prototype.checkUserExists = async () => false;
 
         const req = {
             body: {
-                username: 'newuser',
-                email: 'newuser@example.com',
+                username: 'newuser12',
+                email: 'newuser12@example.com',
                 password: 'password123',
                 weight: 75,
                 age: 30,
@@ -49,7 +49,7 @@ describe('User Route - createUser', function() {
 
     it('should handle errors when user already exists', async function() {
         // Mock checkUserExists to always return true for this test
-        User.checkUserExists = async () => true;
+        User.prototype.checkUserExists = async () => true;
 
         const req = {
             body: {

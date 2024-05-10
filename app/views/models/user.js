@@ -25,7 +25,9 @@ class User {
         const pool = await poolPromise;
         // Tjek, om brugeren allerede findes
         if (await this.checkUserExists(email)) {
-            throw new Error('User already exists');
+            const error = new Error('User already exists');
+        error.status = 400; // Set the status property of the error
+        throw error;
         }
         // Hash brugerens adgangskode
         const hashedPassword = await bcrypt.hash(password, 10);
