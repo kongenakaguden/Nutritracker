@@ -1,6 +1,8 @@
 <div class="navbar">
     <div class="navbar-logo-container">
-        <img src="/images/logo.png" href ="/" alt="NutriTracker Logo" class="navbar-logo" />
+        <a href="/">
+            <img src="/images/logo.png" alt="NutriTracker Logo" class="navbar-logo" />
+        </a>
     </div>
     <div class="navbar-links">
         <a href="/" class="<%= active === 'dashboard' ? 'active' : '' %>">Dashboard</a>
@@ -9,5 +11,5 @@
         <a href="/nutri-report" class="<%= active === 'nutri-report' ? 'active' : '' %>">Nutri Report</a>
         <a href="/activity-tracker" class="<%= active === 'activity-tracker' ? 'active' : '' %>">Activity Tracker</a>
         <a href="/food-inspector" class="<%= active === 'food-inspector' ? 'active' : '' %>">Food Inspector</a>
-</div>
+    </div>
 </div>
